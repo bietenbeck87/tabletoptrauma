@@ -65,10 +65,10 @@ if (isset($_COOKIE["loggedInBG"])) {
                 <a href="bgg_hot.php">
                     <div id="hot" class="topBtn">BGG-HOTLIST</div>
                 </a>
-                <a href="termine.php">
-                    <div id="dateBtn" class="topBtn">Termine</div>
-                </a>
-
+                <?php if(isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])){
+                    echo "<a href='termine.php?id=".$_COOKIE["selectedGroup"]."'><div id='dateBtn' class='topBtn'>Termine</div></a>";
+                }
+                ?>
                 <?php
                 if (!isset($_COOKIE["loggedInBG"])) {
                     echo '<a href="login.php">

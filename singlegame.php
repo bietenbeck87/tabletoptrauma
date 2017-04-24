@@ -239,6 +239,7 @@ if (!$ext) {
         }
         echo "</div></div>";
     }
+
     $fileDirPath = "./uploads/plugins/" . $game["ID"] . "/";
     if (file_exists($fileDirPath)) {
         if ($dh = opendir($fileDirPath)) {
@@ -246,7 +247,7 @@ if (!$ext) {
                 if (is_dir($fileDirPath . $file) && $file != "." && $file != "..") {
                     if (file_exists($fileDirPath . $file . "/index.php")) {
                         echo "<h2 class='accord'>" . $file . " (Plugin)</h2><div class='files accElement'><div id='uplugins'>";
-                        echo "<iframe src='" . $fileDirPath . $file . "/index.php'>";
+                        echo "<iframe src='" . $fileDirPath . $file . "/index.php'></iframe>";
                         echo "</div></div>";
                     }
                 }

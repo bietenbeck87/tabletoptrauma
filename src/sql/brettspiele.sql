@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.5.47)
 # Datenbank: brettspiele
-# Erstellt am: 2017-04-23 00:05:18 +0000
+# Erstellt am: 2017-04-24 11:55:30 +0000
 # ************************************************************
 
 
@@ -355,17 +355,19 @@ CREATE TABLE `termine` (
   `WHO` varchar(255) DEFAULT NULL,
   `PLACE` varchar(255) DEFAULT NULL,
   `GAMES` varchar(255) DEFAULT NULL,
+  `IDGROUP` int(11) DEFAULT NULL,
+  `IDUSER` int(11) DEFAULT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `termine` WRITE;
 /*!40000 ALTER TABLE `termine` DISABLE KEYS */;
 
-INSERT INTO `termine` (`ID`, `DATE`, `TIME`, `WHO`, `PLACE`, `GAMES`)
+INSERT INTO `termine` (`ID`, `DATE`, `TIME`, `WHO`, `PLACE`, `GAMES`, `IDGROUP`, `IDUSER`)
 VALUES
-	(2,'2017-03-31','19:00:00','Pat, Maren, Alex, Marcel','Bietenbecks','Shadows of Brimstone: City of the Ancients'),
-	(3,'2017-04-14','17:00:00','Pat, Maren, Alex, Marcel','Bietenbeck','Cash & Guns||Concept||Dreams||Ghost Stories||King of Tokyo||Mysterium||Pandemie: Reign of Cthulhu||Projekt:Elite||Shadows of Brimstone: City of the Ancients||Shadows of Brimstone: Swamps of Death||The Game||Villen des Wahnsinns 2nd Edition'),
-	(4,'2017-04-16','20:00:00','Wer Kommt der Kommt','Ralle','Villen des Wahnsinns 2nd Edition');
+	(2,'2017-03-31','19:00:00','Pat, Maren, Alex, Marcel','Bietenbecks','Shadows of Brimstone: City of the Ancients',3,1),
+	(3,'2017-04-14','17:00:00','Pat, Maren, Alex, Marcel','Bietenbeck','Cash & Guns||Concept||Dreams||Ghost Stories||King of Tokyo||Mysterium||Pandemie: Reign of Cthulhu||Projekt:Elite||Shadows of Brimstone: City of the Ancients||Shadows of Brimstone: Swamps of Death||The Game||Villen des Wahnsinns 2nd Edition',3,1),
+	(4,'2017-04-16','20:00:00','Wer Kommt der Kommt','Ralle','Villen des Wahnsinns 2nd Edition',3,1);
 
 /*!40000 ALTER TABLE `termine` ENABLE KEYS */;
 UNLOCK TABLES;

@@ -6,7 +6,7 @@ if(isset($_GET["id"])){
     $group = $db->getAll("Select * from groups where ID='".$_GET["id"]."'");
 }
 if(isset($_POST["groupID"])){
-    $db->execute("update groups set NAME = '".$_POST["name"]."',GROUPPIC='". $_POST["name"]."', where ID='".$_POST["groupID"]."'");
+    $db->execute("update groups set NAME = '".$_POST["name"]."', GROUPPIC='". $_POST["picture"]."' where ID='".$_POST["groupID"]."'");
     header('Location: index.php');
 }else {
     if (isset($_POST["name"]) && isset($_COOKIE["loggedInBG"])) {
@@ -39,6 +39,6 @@ if(isset($_POST["groupID"])){
     <?php if(isset($group)){
         $link = $_SERVER["HTTP_HOST"]."/login.php?group=".$group[0]["ID"]."&ghash=".md5($group[0]["NAME"]);
         echo $link;
-        echo "<a href='whatsapp://send?text=".$link."' data-action='share/whatsapp/share'><img src='./src/img/whatsapp-button.jpg'></a>";
+        echo "<a href='whatsapp://send?text=".$link."' data-action='share/whatsapp/share'><img id='waimg' src='./src/img/whatsapp-button.jpg'></a>";
     }?>
 </div>

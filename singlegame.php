@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Brettspiele-APP</title>
+    <title>TABLETOP TRAUMA</title>
     <link rel="stylesheet" type="text/css" href="./src/css/style.css">
     <link rel="stylesheet" href="./src/css/lightbox.min.css">
     <script src="./src/js/lightbox-plus-jquery.min.js"></script>

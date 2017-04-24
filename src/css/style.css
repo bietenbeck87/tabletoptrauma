@@ -253,7 +253,6 @@ div.Alex_banner{
 div#News {
     border: 1px solid black;
     font-family: monospace;
-    font-size: 16px;
     height: 25px;
     overflow: hidden;
     padding-left: 12px;
@@ -574,7 +573,7 @@ div#footer {
     right: -82px;
 }
 #logo img {
-    height: 100%;
+    max-height: 116px;
 }
 #siteDiv {
     background: #f5f5f5 none repeat scroll 0 0;
@@ -608,6 +607,7 @@ div#footer {
 #logoDiv {
     z-index: 20;
     position: relative;
+    text-align: center;
 }
 div#gameTableDiv {
     overflow: auto;
@@ -658,6 +658,9 @@ form {
 #uplugins iframe {
     border: medium none;
     width: 100%;
+}
+#waimg{
+    height:30px;
 }
 
 

@@ -112,7 +112,7 @@ if ($IDGame) {
 }
 ?>
 <meta charset="utf-8"/>
-<title>Brettspiele-APP</title>
+<title>TABLETOP TRAUMA</title>
 <script language="javascript" type="text/javascript" src="./src/js/validateeditgames.js"></script>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
 <a href="http://www.boardgamegeek.com" target="_blank">

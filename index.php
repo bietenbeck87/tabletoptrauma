@@ -20,7 +20,7 @@ if (isset($_POST["groups"])) {
 }
 ?>
     <meta charset="utf-8"/>
-    <title>Brettspiele-APP</title>
+    <title>TABLETOP TRAUMA</title>
     <link rel="stylesheet" type="text/css" href="./src/css/style.css">
     <script src="./src/js/jquery-3.2.1.min.js"></script>
     <script src="./src/js/newsSlider.js"></script>
@@ -57,7 +57,20 @@ if (isset($_COOKIE["loggedInBG"])) {
     <div id="btnLine">
         <div id="logo">
             <div id="blood"></div>
-            <div id="logoDiv"><img src="./src/img/logos.png"></div>
+            <div id="logoDiv">
+                <?php if (isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])) {
+                    $selectedGroup = $db->getAll("Select *from groups where ID='".$_COOKIE["selectedGroup"]."'");
+                    if($selectedGroup[0]["GROUPPIC"] != ""){
+                        echo "<img src='".$selectedGroup[0]["GROUPPIC"]."'>";
+                    }
+                    else{
+                        echo "<img src='./src/img/logos.png'>";
+                    }
+                }else{
+                    echo "<img src='./src/img/logos.png'>";
+                }
+                ?>
+            </div>
         </div>
         <div id="buttons">
             <div class="floatCenter">

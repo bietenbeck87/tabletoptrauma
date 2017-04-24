@@ -1,0 +1,716 @@
+body{
+    background: #333333;
+    padding:20px;
+    font-family: fantasy;
+}
+
+tr#head {
+    background: #555 none repeat scroll 0 0;
+    color: #fff;
+}
+.even {
+    background: #999 none repeat scroll 0 0;
+}
+.odd > td {
+    border-left:1px dashed #999;
+    text-align: center;
+    padding: 0 10px;
+}
+.even > td {
+    border-left:1px dashed #fff;
+    text-align: center;
+    padding: 0 10px;
+}
+.odd .packed{
+    margin: 0 10px 0;
+}
+.even .packed{
+    margin:0 10px 0;
+}
+.odd img {
+    width:220px;
+    display: block;
+    border:3px outset black;
+    border-radius: 35px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+.odd img:hover{
+    box-shadow:none;
+    border:3px inset black;
+}
+.even img {
+    width:220px;
+    display: block;
+    border:3px outset black;
+    border-radius: 35px;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+.even img:hover{
+    box-shadow:none;
+    border:3px inset black;
+}
+.picture > img {
+    display: block;
+    width: 250px;
+}
+.mainImg {
+    margin: 5px 0 5px;
+}
+table {
+    border: 2px solid black;
+    border-spacing: 0;
+    width:100%;
+    background: #f5f5f5;
+}
+.accElement table{
+    border:none;
+}
+#head > td {
+    padding: 10px 10px 0 ;
+    text-align: center;
+}
+.extensions {
+    border: 1px solid black;
+    margin-top:20px;
+}
+.genreGames{
+    border: 1px solid black;
+    margin-top:20px;
+}
+.images{
+    border: 1px solid black;
+    margin-top:20px;
+}
+.files{
+    border: 1px solid black;
+    margin-top:20px;
+}
+.basegame{
+    border: 1px solid black;
+    margin-top:20px;
+}
+.aditionalData {
+    clear:both;
+}
+.picture {
+    border: 1px solid black;
+    margin-top: 5px;
+}
+.data {
+    float: left;
+    padding: 0px 10px;
+}
+.gameName {
+    font-family: monospace;
+    font-size: 30px;
+    text-align: center;
+    text-decoration: underline;
+    color: #f5f5f5;
+}
+.icon{
+    height:20px;
+}
+
+.bBot{
+    border-bottom: 1px dashed #555;
+    margin: 15px;
+	padding: 0 30px;
+}
+.noBot{
+    margin: 15px;
+	padding: 0 30px;
+}
+label {
+    display: block;
+}
+div.editForm {
+    border: 1px solid black;
+    margin: 10px 0 0 30px;
+    padding: 10px;
+    width: 350px;
+    background: #f5f5f5;
+}
+.editForm input {
+    margin-bottom: 10px;
+}
+.editForm select {
+    margin-bottom: 10px;
+}
+.editForm button {
+    height: 30px;
+    margin-top: 15px;
+    width: 300px;
+}
+.filterGames {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+    padding: 6px;
+    background: #f5f5f5;
+}
+.filterGroups {
+    background: #f5f5f5 none repeat scroll 0 0;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+    padding: 6px;
+}
+#gamecount {
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px 0 5px 10px;
+    text-align: center;
+    background: #f5f5f5;
+}
+.extensions table {
+    border-style: solid none;
+}
+div#loginBox {
+    border: 2px solid black;
+    margin: 30px auto;
+    padding: 10px;
+    width: 300px;
+    background: #f5f5f5;
+}
+#loginBox input {
+    height: 30px;
+    margin-top: 15px;
+    width: 300px;
+}
+
+button#searchButton {
+    float: right;
+    height: 22px;
+    width: 75px;
+}
+button#changeButton {
+    float: right;
+    height: 22px;
+    width: 125px;
+}
+
+#uimgs img {
+    border: 2px dashed black;
+    height: 180px;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+.extensions h2 {
+    margin-left: 15px;
+}
+#ufiles > a {
+    padding: 0 0 0 15px;
+}
+div#uploadForm {
+    border: 2px solid black;
+    padding: 20px;
+    width: 300px;
+    background: #f5f5f5;
+}
+#uploadForm button {
+    height: 30px;
+    margin-top: 20px;
+    width: 300px;
+}
+
+.banner {
+    float: left;
+    height: 35px;
+    margin-left: 30px;
+    width: 19px;
+    box-shadow: 5px 3px 4px 1px rgba(0,0,0,0.75);
+}
+#colorpick.banner{
+    float:right;
+    margin: -5px 130px 0 0;
+}
+.Banner_div {
+    position: absolute;
+    width:220px;
+}
+
+div.Marcel_banner{
+    background-image: url("../img/marcel.png");
+}
+div.Pat_banner{
+    background-image: url("../img/pat.png");
+}
+div.Alex_banner{
+    background-image: url("../img/alex.png");
+}
+.orderedFlag {
+    height: 25px;
+    margin-top: -40px;
+    position: absolute;
+    width: 100px;
+    background: url("../img/bestellt.png");
+    margin-left: -6px;
+}
+.packed {
+    float: left;
+}
+div#News {
+    border: 1px solid black;
+    font-family: monospace;
+    font-size: 16px;
+    height: 25px;
+    overflow: hidden;
+    padding-left: 12px;
+    background: #f5f5f5;
+}
+#marqID {
+    height: 25px;
+}
+.gameinfo {
+    border: 1px solid black;
+    margin: 10px 0;
+    overflow: auto;
+    padding: 25px;
+    position: relative;
+    background: #f5f5f5;
+    border-radius: 28px;
+}
+.files > div {
+    margin-bottom: 10px;
+}
+.accord{
+    background: #f5f5f5;
+}
+
+.aditionalData h2 {
+    background-image: url("../img/arrow-down.png");
+    background-repeat:no-repeat;
+    background-position:98% 50%;
+    border: 1px solid black;
+    margin: 0;
+    padding: 5px 0 5px 10px;
+    border-radius: 28px;
+    text-align: center;
+}
+.aditionalData h2.selected {
+    background-image: url("../img/arrow-up.png");
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+
+}
+.gamedescription {
+    border: 1px solid black;
+    overflow: scroll;
+    max-height: 310px;
+    padding: 10px;
+}
+.dataContainer {
+    border: 1px solid black;
+}
+.gameinfo .packed {
+    margin-top: 16px;
+}
+.data button {
+    margin: 5px 10px 0 10px;
+    border-radius: 9px;
+    border: 2px black;
+    border-style: dotted;
+}
+.filterGames form {
+    margin: 0;
+}
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: circle;
+}
+.head {
+    background: #555 none repeat scroll 0 0;
+    color: #fff;
+}
+.head td{
+    border-bottom: 1px solid black;
+    padding:5px;
+    text-align: center;
+}
+#BackBtn{
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    text-decoration: none;
+    color: #3f3f3f;
+}
+#BackBtn:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+
+a{
+    text-decoration: none;
+}
+#login {
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: right;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    border-top-right-radius: 20px;
+    color: #3f3f3f;
+}
+#login:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+#register {
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: right;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    border-bottom-right-radius: 20px;
+    color: #3f3f3f;
+    margin-top:8px;
+}
+#register:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+#sites {
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: right;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    margin-right: 8px;
+    color: #3f3f3f;
+}
+#sites:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+
+#hot{
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: left;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    margin-right:8px;
+    border-top-left-radius: 20px;
+    color: #3f3f3f;
+}
+#hot:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+#createGroup{
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: left;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    margin-right:8px;
+    border-bottom-left-radius: 20px;
+    color: #3f3f3f;
+    margin-top: 8px;
+}
+#createGroup:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+
+#dateBtn{
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: left;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    color: #3f3f3f;
+}
+#dateBtn:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+.gameButtons div{
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    display: inline-block;
+    font-family: monospace;
+    margin:0 10px;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    color: #3f3f3f;
+}
+
+.gameButtons div:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+.gameButtons div.deactiveBtn {
+    color: #999;
+}
+.gameButtons div.deactiveBtn:hover {
+    color: #999;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    background: #ccc none repeat scroll 0 0;
+    border: 2px dashed #999;
+}
+
+#terminForm {
+    border: 1px solid black;
+    width: 305px;
+    padding: 15px;
+    margin:0px auto;
+    background: #f5f5f5;
+}
+#terminForm button {
+    margin-top: 20px;
+    width: 305px;
+    height: 30px;
+    font-size: 16px;
+}
+#terminForm h3 {
+    text-align: center;
+    margin-top: 0;
+    text-decoration: underline;
+}
+.active{
+    height: 30px;
+    width: 30px;
+    background: #00ff00;
+    margin: auto auto;
+}
+.inactive{
+    height: 30px;
+    width: 30px;
+    background: #f00;
+    margin: auto auto;
+}
+#termine table {
+    margin-top: 20px;
+}
+.hotlisttable {
+    margin-top: 15px;
+}
+.newsElement {
+    margin-top: 5px;
+    background: #f5f5f5;
+}
+.hidden{
+    display: none;
+}
+#btnLine {
+    background: #f5f5f5;
+    height: 100px;
+    padding: 20px;
+    border-top-right-radius: 30px;
+    border-top-left-radius: 30px;
+    border: 1px solid black;
+}
+.accElement {
+    margin-top:0px;
+    display:none;
+    background: #f5f5f5;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding:10px;
+}
+.youtube {
+    border: 1px solid black;
+    padding: 5px;
+    text-align: center;
+}
+div#footer {
+    height: 30px;
+    background: #f5f5f5;
+    border-left: 2px solid black;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-right: 2px solid black;
+    border-bottom: 2px solid black;
+}
+#btnLine > div#logo {
+    height: 116px;
+    width: 160px;
+    position: absolute;
+    margin: 0 50%;
+    right: -82px;
+}
+#logo img {
+    height: 100%;
+}
+#siteDiv {
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid black;
+    border-radius: 30px;
+    margin-top: 30px;
+    padding-bottom: 35px;
+    padding-left: 35px;
+}
+#sitediv li {
+    list-style-type: square;
+    margin-left: 25px;
+}
+.filterGames select {
+    width: 80px;
+}
+.formInputs > input {
+    width: 165px;
+}
+
+#blood{
+    background-image: url("../img/blood.png");
+    height: 110px;
+    position: absolute;
+    width: 110px;
+    z-index: 10;
+    left: 20px;
+    top: -6px;
+    display:none;
+}
+#logoDiv {
+    z-index: 20;
+    position: relative;
+}
+div#gameTableDiv {
+    overflow: auto;
+}
+.singleTable {
+    overflow: auto;
+}
+.clear {
+    clear: both;
+}
+.formInputs{
+    float: left;
+}
+.formInputs span {
+    display: inline-block;
+}
+.formBtn{
+}
+form {
+    margin: 0;
+}
+.gameButtons{
+    background: #f5f5f5 none repeat scroll 0 0;
+    border: 1px solid black;
+    border-radius: 28px;
+    margin: 10px 0;
+    padding: 10px;
+    position: relative;
+    text-align: center;
+}
+#shortName {
+    position: absolute;
+    margin-left: 6px;
+    font-family: monospace;
+    margin-top: 10px;
+    color:black;
+}
+.banner img {
+    border: none;
+    box-shadow: none;
+    height: 35px;
+    width: 25px;
+    border-radius: 0px;
+}
+.banner img:hover {
+    border:none;
+}
+#uplugins iframe {
+    border: medium none;
+    width: 100%;
+}
+
+
+@media only screen and (max-width: 940px) {
+    #login{
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+    }
+    #register{
+        margin: 0px;
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+    }
+    #createGroup{
+        margin:0px;
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+    }
+    #hot {
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+        margin-right: 0px;
+    }
+    #btnLine > div#logo {
+        margin: 20px 50%;
+        position: relative;
+        right: 78px;
+    }
+    #btnLine {
+        height:inherit;
+    }
+    #sites{
+        float:none;
+        display: inline-block;
+        margin-right: 0px;
+    }
+    #dateBtn{
+        float:none;
+        display: inline-block;
+    }
+    .floatCenter{
+        text-align: center;
+    }
+    div#News{
+        height:60px;
+    }
+}
+@media only screen and (max-width: 500px) {
+    div#News{
+        height:80px;
+    }
+}

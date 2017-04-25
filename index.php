@@ -29,8 +29,11 @@ if (isset($_POST["groups"])) {
 <?php
 include_once("./core/dB.php");
 include_once("./core/helper.php");
+$bStatus=false;
 $db = new dB();
 $helper = new helper();
+
+$aFlags = array(0 => "owner_banner_arrived.png", 1 => "owner_banner_ordered.png", 2 => "owner_banner_wanted.png");
 
 $getTags = "select * from tags";
 $aTags = $db->getAll($getTags);
@@ -44,14 +47,16 @@ if (isset($_COOKIE["loggedInBG"])) {
 }
 
 if (isset($_COOKIE["loggedInBG"])) {
-    if (isset($_COOKIE["selectedGroup"])){
-        $getNews ="Select n.* from news as n join user2group as u2gr on n.USERID =u2gr.IDUSER where u2gr.IDGROUP='".$_COOKIE["selectedGroup"]."' order by n.ID desc limit 10";
-    }else {
-        $getNews = "select * from news where USERID='".$_COOKIE["loggedInBG"]."' order by ID desc limit 10";
+    if (isset($_COOKIE["selectedGroup"])) {
+        $getNews = "Select n.* from news as n join user2group as u2gr on n.USERID =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' order by n.ID desc limit 10";
+    }
+    else {
+        $getNews = "select * from news where USERID='" . $_COOKIE["loggedInBG"] . "' order by ID desc limit 10";
     }
     $News = $db->getAll($getNews);
-}else{
-    $News=array();
+}
+else {
+    $News = array();
 }
 ?>
     <div id="btnLine">
@@ -59,14 +64,15 @@ if (isset($_COOKIE["loggedInBG"])) {
             <div id="blood"></div>
             <div id="logoDiv">
                 <?php if (isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])) {
-                    $selectedGroup = $db->getAll("Select *from groups where ID='".$_COOKIE["selectedGroup"]."'");
-                    if($selectedGroup[0]["GROUPPIC"] != ""){
-                        echo "<img src='".$selectedGroup[0]["GROUPPIC"]."'>";
+                    $selectedGroup = $db->getAll("Select *from groups where ID='" . $_COOKIE["selectedGroup"] . "'");
+                    if ($selectedGroup[0]["GROUPPIC"] != "") {
+                        echo "<img src='" . $selectedGroup[0]["GROUPPIC"] . "'>";
                     }
-                    else{
+                    else {
                         echo "<img src='./src/img/logos.png'>";
                     }
-                }else{
+                }
+                else {
                     echo "<img src='./src/img/logos.png'>";
                 }
                 ?>
@@ -78,8 +84,8 @@ if (isset($_COOKIE["loggedInBG"])) {
                 <a href="bgg_hot.php">
                     <div id="hot" class="topBtn">BGG-HOTLIST</div>
                 </a>
-                <?php if(isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])){
-                    echo "<a href='termine.php?id=".$_COOKIE["selectedGroup"]."'><div id='dateBtn' class='topBtn'>Termine</div></a>";
+                <?php if (isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])) {
+                    echo "<a href='termine.php?id=" . $_COOKIE["selectedGroup"] . "'><div id='dateBtn' class='topBtn'>Termine</div></a>";
                 }
                 ?>
                 <?php
@@ -98,11 +104,11 @@ if (isset($_COOKIE["loggedInBG"])) {
                 </a>
                 <div class='clear'></div>
                 <?php
-                if(!isset($_COOKIE["loggedInBG"])) {
+                if (!isset($_COOKIE["loggedInBG"])) {
                     echo "<a href = 'addeditUser.php' ><div id = 'register' class='topBtn' >register</div></a>";
                 }
-                if(isset($_COOKIE["loggedInBG"])) {
-                    echo "<a href ='addeditUser.php?ID=".$_COOKIE["loggedInBG"]."' ><div id = 'register' class='topBtn' >User Menu</div></a>";
+                if (isset($_COOKIE["loggedInBG"])) {
+                    echo "<a href ='addeditUser.php?ID=" . $_COOKIE["loggedInBG"] . "' ><div id = 'register' class='topBtn' >User Menu</div></a>";
                     echo "<a href='addeditGroup.php'><div id='createGroup' class='topBtn'>create Group</div></a>";
                 }
                 ?>
@@ -140,9 +146,9 @@ if (isset($_COOKIE["loggedInBG"])) {
             }
             echo "</Select></div>";
             echo "<div class='formBtn'><button type='submit' id='changeButton'>change Group</button></div>";
-            $selectedGroupInfo = $db->getAll("Select * from groups where ID='".$_COOKIE["selectedGroup"]."'");
-            if(isset($_COOKIE["loggedInBG"]) && $_COOKIE["loggedInBG"] == $selectedGroupInfo[0]["GROUPADMIN"]){
-                echo "<a href='addeditGroup.php?id=".$_COOKIE["selectedGroup"]."'><div class='formBtn'><button type='button' id='changeButton'>edit Group</button></div></a>";
+            $selectedGroupInfo = $db->getAll("Select * from groups where ID='" . $_COOKIE["selectedGroup"] . "'");
+            if (isset($_COOKIE["loggedInBG"]) && $_COOKIE["loggedInBG"] == $selectedGroupInfo[0]["GROUPADMIN"]) {
+                echo "<a href='addeditGroup.php?id=" . $_COOKIE["selectedGroup"] . "'><div class='formBtn'><button type='button' id='changeButton'>edit Group</button></div></a>";
             }
             echo "<div class='clear'></div></div>";
         }
@@ -273,7 +279,30 @@ if (isset($_COOKIE["loggedInBG"])) {
                     }
                     ?>
                 </Select>
-                <?php
+
+                <?php if (isset($_COOKIE["loggedInBG"])) {
+                    echo "<Select name='status'><option value='false'";
+                    if (isset($_POST["status"]) and $_POST["status"] == "false") {
+                        echo " selected='selected'";
+                    }
+                    echo ">Status</option><option value='0'";
+                    if (isset($_POST["status"]) and $_POST["status"] == "0") {
+                        echo " selected='selected'";
+                    }
+                    echo ">arrived</option><option value='1'";
+                    if (isset($_POST["status"]) and $_POST["status"] == "1") {
+                        echo " selected='selected'";
+                    }
+                    echo ">ordered</option><option value='2'";
+                    if (isset($_POST["status"]) and $_POST["status"] == "2") {
+                        echo " selected='selected'";
+                    }
+                    echo ">wants</option>;
+                    }
+                </Select>";
+                }
+
+
                 //USERS
                 if (isset($_COOKIE["selectedGroup"])) {
                     echo "<Select name='besitzer'><option value='false'>Owner</option>";
@@ -315,6 +344,11 @@ if (isset($_POST["Koop"]) && $_POST["Koop"] != "false") {
 if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
     $add .= " and GENRE like '%" . $_POST["Genre"] . "%'";
 }
+if (isset($_POST["status"]) && $_POST["status"] != "false") {
+    $add .= " and STATUS='" . $_POST["status"] . "'";
+    $bStatus=true;
+}
+
 if (isset($_COOKIE["selectedGroup"])) {
     if (isset($_POST["besitzer"]) && $_POST["besitzer"] != "false") {
         $getGames = "Select distinct b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2g.IDUSER ='" . $_POST["besitzer"] . "' and u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
@@ -322,6 +356,8 @@ if (isset($_COOKIE["selectedGroup"])) {
     else {
         $getGames = "Select distinct b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
     }
+}elseif($bStatus && isset($_COOKIE["loggedInBG"])){
+    $getGames = "Select b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='".$_COOKIE["loggedInBG"]."' and ERWEITERUNG is Null";
 }
 else {
     $getGames = "Select b.* from brettspiele as b where 1=1 and ERWEITERUNG is Null";
@@ -367,7 +403,7 @@ foreach ($games as $game) {
 
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
-        $banner .= "<div class='banner' style='background:#".$ubannerName["FLAGCOLOR"].";' title='".$ubannerName["NAME"]."'><div id='shortName'>".substr($ubannerName["NAME"],0,1)."</div><img  src='./src/img/owner_banner.png'></div>";
+        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
     }
     $genre = str_replace("||", "<br>", $game["GENRE"]);
     echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $genre . "</td></tr>";

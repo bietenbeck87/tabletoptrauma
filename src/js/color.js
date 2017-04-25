@@ -6,6 +6,6 @@ $(document).ready(function () {
 
     $("#colorInput").blur(function(){
       var Color = "#"+$("#colorInput").val();
-      $("#colorPick").css("background",Color);
+      $(".banner").css("background",Color);
   });
 })

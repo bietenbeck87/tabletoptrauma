@@ -75,7 +75,7 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
                 }
             }
         }
-        $sqlAddEdit = "Update brettspiele set NAME='" . mysql_real_escape_string($_POST["name"]) . "',DESCRIPTION='" . mysql_real_escape_string($_POST["description"]) . "', MIN_P='" . $_POST["min_p"] . "',MAX_P='" . $_POST["max_p"] . "',MIN_T='" . $_POST["min_t"] . "',MAX_T='" . $_POST["max_t"] . "',,URL='" . $_POST["url"] . "',BILD='" . $_POST["img"] . "',YOUTUBE='" . $_POST["yt"] . "',KOOP='" . $_POST["koop"] . "',GENRE='" . $genre . "',ERBT='" . $extensionList . "' where ID='" . $IDGame . "'";
+        $sqlAddEdit = "Update brettspiele set NAME='" . mysql_real_escape_string($_POST["name"]) . "',DESCRIPTION='" . mysql_real_escape_string($_POST["description"]) . "', MIN_P='" . $_POST["min_p"] . "',MAX_P='" . $_POST["max_p"] . "',MIN_T='" . $_POST["min_t"] . "',MAX_T='" . $_POST["max_t"] . "',URL='" . $_POST["url"] . "',BILD='" . $_POST["img"] . "',YOUTUBE='" . $_POST["yt"] . "',KOOP='" . $_POST["koop"] . "',GENRE='" . $genre . "',ERBT='" . $extensionList . "' where ID='" . $IDGame . "'";
     }
     else {
         if (isset($_POST["GameIDExt"])) {
@@ -87,8 +87,8 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
             else {
                 $IDGame = $_POST["GameIDExt"] + 1;
             }
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,GENRE,ERBT) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["GameIDExt"] . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','" . $genre . "','')";
-            $sqlUser2Game = "insert into user2Game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,GENRE,ERBT,CREATEDBY) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["GameIDExt"] . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','" . $genre . "','','".$LoggedInuser["ID"]."')";
+            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
             $db->execute($sqlUser2Game);
             $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["Name"] . " " . $aBestelltArray[$bestellt];
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $IDGame . "','" . $message . "','".$LoggedInuser["ID"]."')";
@@ -97,8 +97,8 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
         else {
             $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG is NULL");
             $IDGame = $highestID + 100;
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,GENRE,ERBT) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','" . $genre . "','" . $extensionList . "')";
-            $sqlUser2Game = "insert into user2Game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,GENRE,ERBT,CREATEDBY) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','" . $genre . "','" . $extensionList . "','".$LoggedInuser["ID"]."')";
+            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
             $db->execute($sqlUser2Game);
             $message = "Das Spiel \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $IDGame . "','" . $message . "','".$LoggedInuser["ID"]."')";
@@ -197,16 +197,23 @@ if ($IDGame) {
             </select>
         </fieldset>
         </br>
-        <fieldset>
-            <label>steht zur Verfügung:</label>
-            <input type="radio" name="status" value="0" <?php if ($game["BESTELLT"] == 0) {
+        <?php
+        if (!isset($_GET["GameID"])) {
+        echo"<fieldset>
+            <label>steht zur Verfügung:</label><input type='radio' name='status' value='0' ";
+            if ($game["BESTELLT"] == 0) {
                 echo "checked";
-            } ?>>
-            <label>ist bestellt:</label>
-            <input type="radio" name="status" value="1" <?php if ($game["BESTELLT"] == 1) {
+            }
+            echo"><label>ist bestellt:</label><input type='radio' name='status' value='1' ";
+            if ($game["BESTELLT"] == 1) {
                 echo "checked";
-            } ?>>
-        </fieldset>
+            }
+            echo "><label>auf Wantliste:</label><input type='radio' name='status' value='2' ";
+            if ($game["BESTELLT"] == 2) {
+                echo "checked";
+            }
+            echo "></fieldset>";
+        }?>
         </br>
         <?php
         if (!$ext) {

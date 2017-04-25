@@ -64,14 +64,31 @@ elseif (isset($_POST["name"])) {
         <label>Color:</label>#<input type="text" name="colorflag" id="colorInput" <?php if (isset($user)) {
             echo "value='" . $user[0]["FLAGCOLOR"] . "'";
         } ?>>
+        <div class="showflags">
         <div id="colorPick" class="banner" <?php if (isset($user)) {
             echo "style='background:#" . $user[0]["FLAGCOLOR"] . ";'";
         } ?>>
-            <div id="shortName"><?php if (isset($user)) {
+            <div class="shortName"><?php if (isset($user)) {
                     echo substr($user[0]["NAME"], 0, 1);
                 } ?></div>
-            <img src="./src/img/owner_banner.png"></div>
+            <img src="./src/img/owner_banner_wanted.png"></div>
 
+        <div id="colorPick" class="banner" <?php if (isset($user)) {
+                    echo "style='background:#" . $user[0]["FLAGCOLOR"] . ";'";
+                } ?>>
+                    <div class="shortName"><?php if (isset($user)) {
+                            echo substr($user[0]["NAME"], 0, 1);
+                        } ?></div>
+                    <img src="./src/img/owner_banner_ordered.png"></div>
+        <div id="colorPick" class="banner" <?php if (isset($user)) {
+                    echo "style='background:#" . $user[0]["FLAGCOLOR"] . ";'";
+                } ?>>
+                    <div class="shortName"><?php if (isset($user)) {
+                            echo substr($user[0]["NAME"], 0, 1);
+                        } ?></div>
+                    <img src="./src/img/owner_banner_arrived.png"></div>
+        </div>
+        <div class="clear"></div>
         <?php if (isset($user)) {
             echo '<label>Old Password:</label><input type="password" name="oldpassword">';
         } ?>

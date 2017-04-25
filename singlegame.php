@@ -18,6 +18,7 @@ else {
     $inDIR = "brettspiele/";
 }
 $aBestelltArray = array(0 => "ist angekommen", 1 => "wurde bestellt", 2 => "wurde zur Wantsliste hinzugefügt");
+$aFlags = array(0 =>"owner_banner_arrived.png",1=>"owner_banner_ordered.png",2=>"owner_banner_wanted.png");
 
 include_once("./core/dB.php");
 include_once("./core/helper.php");
@@ -100,7 +101,7 @@ else {
 }
 $banner = "";
 foreach ($aBesitzer as $ubannerName) {
-    $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div id='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/owner_banner.png'></div>";
+    $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
 }
 echo "</div>
 <div class='gameinfo'>
@@ -146,18 +147,19 @@ if ($_COOKIE["loggedInBG"]) {
         else {
             echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>ordered</div></a>";
         }
+
         if ($user2Game[0]["STATUS"] == "0") {
             echo "<div class='deactiveBtn'>arrived</div>";
         }
         else {
             echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>arrived</div></a>";
         }
-        if ($user2Game[0]["STATUS"] == "0" || $user2Game[0]["STATUS"] == "1") {
-            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=delete'><div class='activeBtn'>lost</div></a>";
+        if ($user2Game[0]["STATUS"] == "0" || $user2Game[0]["STATUS"] == "1" || $user2Game[0]["STATUS"] == "2") {
+            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=delete'><div class='activeBtn'>remove</div></a>";
         }
     }
     else {
-        echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>ordered</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>arrived</div></a>";
+        echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>ordered</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>arrived</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=2'><div class='activeBtn'>Want</div></a>";
     }
     echo "</div>";
 }
@@ -209,7 +211,7 @@ if (!$ext) {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div id='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/owner_banner.png'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
 
             }
             $genre = str_replace("||", "<br>", $extension["GENRE"]);
@@ -290,7 +292,7 @@ if (!$ext) {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div id='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/owner_banner.png'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
             }
             $genre = str_replace("||", "<br>", $specGame["GENRE"]);
             echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $specGame["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $specGame["BILD"] . "'></div></div></a></td><td>" . $specGame["NAME"] . "</td><td>" . $specGame["MIN_P"] . " - " . $specGame["MAX_P"] . "</td><td>" . $specGame["MIN_T"] . " - " . $specGame["MAX_T"] . " min.</td><td>" . $aKoop[$specGame["KOOP"]] . "</td><td>" . $genre . "</td></tr>";
@@ -319,7 +321,7 @@ else {
     }
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
-        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div id='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/owner_banner.png'></div>";
+        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
     }
 
     echo "<h2 class='accord'>Erweiterung von:</h2><div class='basegame accElement'>";
@@ -340,7 +342,7 @@ else {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div id='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/owner_banner.png'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
             }
             echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $extendedGame ["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $extendedGame ["BILD"] . "'></div></div></a></td><td>" . $extendedGame ["NAME"] . "</td><td>" . $extendedGame ["MIN_P"] . " - " . $extendedGame ["MAX_P"] . "</td><td>" . $extendedGame ["MIN_T"] . " - " . $extendedGame ["MAX_T"] . " min.</td><td>" . $aKoop[$extendedGame ["KOOP"]] . "</td><td>" . $genre . "</td></tr>";
             if ($rowEvenOdd == "odd") {

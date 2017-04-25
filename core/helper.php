@@ -69,9 +69,9 @@ class helper
     {
         $formattedArray=array();
         if($group){
-            $UserIDS= $db->getAll("Select u.* from users as u join user2game as u2g on u.ID=u2g.IDUSER join user2group as u2gr on u.ID=u2gr.IDUSER where IDGAME ='" . $gameID . "' and u2gr.IDGROUP='" . $group . "'");
+            $UserIDS= $db->getAll("Select u.*,u2g.STATUS from users as u join user2game as u2g on u.ID=u2g.IDUSER join user2group as u2gr on u.ID=u2gr.IDUSER where IDGAME ='" . $gameID . "' and u2gr.IDGROUP='" . $group . "'");
         }elseif(true){
-            $UserIDS= $db->getAll("Select u.* from users as u join user2game as u2g on u.ID=u2g.IDUSER where u2g.IDGAME ='" . $gameID . "' and u.ID='" . $userID . "'");
+            $UserIDS= $db->getAll("Select u.*,u2g.STATUS from users as u join user2game as u2g on u.ID=u2g.IDUSER where u2g.IDGAME ='" . $gameID . "' and u.ID='" . $userID . "'");
         }
         foreach($UserIDS as $userData){
             $formattedArray[$userData["ID"]]=$userData;

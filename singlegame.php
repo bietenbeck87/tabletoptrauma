@@ -19,6 +19,7 @@ else {
 }
 $aBestelltArray = array(0 => "ist angekommen", 1 => "wurde bestellt", 2 => "wurde zur Wantsliste hinzugefügt");
 $aFlags = array(0 =>"owner_banner_arrived.png",1=>"owner_banner_ordered.png",2=>"owner_banner_wanted.png");
+$aFlagDesc = array(0 => "available", 1 => "ordered", 2 => "wanted");
 
 include_once("./core/dB.php");
 include_once("./core/helper.php");
@@ -101,7 +102,7 @@ else {
 }
 $banner = "";
 foreach ($aBesitzer as $ubannerName) {
-    $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
+    $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
 }
 echo "</div>
 <div class='gameinfo'>
@@ -211,7 +212,7 @@ if (!$ext) {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
 
             }
             $genre = str_replace("||", "<br>", $extension["GENRE"]);
@@ -292,7 +293,7 @@ if (!$ext) {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
             }
             $genre = str_replace("||", "<br>", $specGame["GENRE"]);
             echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $specGame["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $specGame["BILD"] . "'></div></div></a></td><td>" . $specGame["NAME"] . "</td><td>" . $specGame["MIN_P"] . " - " . $specGame["MAX_P"] . "</td><td>" . $specGame["MIN_T"] . " - " . $specGame["MAX_T"] . " min.</td><td>" . $aKoop[$specGame["KOOP"]] . "</td><td>" . $genre . "</td></tr>";
@@ -321,7 +322,7 @@ else {
     }
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
-        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
+        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
     }
 
     echo "<h2 class='accord'>Erweiterung von:</h2><div class='basegame accElement'>";
@@ -342,7 +343,7 @@ else {
             }
             $banner = "";
             foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
+                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
             }
             echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $extendedGame ["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $extendedGame ["BILD"] . "'></div></div></a></td><td>" . $extendedGame ["NAME"] . "</td><td>" . $extendedGame ["MIN_P"] . " - " . $extendedGame ["MAX_P"] . "</td><td>" . $extendedGame ["MIN_T"] . " - " . $extendedGame ["MAX_T"] . " min.</td><td>" . $aKoop[$extendedGame ["KOOP"]] . "</td><td>" . $genre . "</td></tr>";
             if ($rowEvenOdd == "odd") {

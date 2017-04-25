@@ -34,6 +34,7 @@ $db = new dB();
 $helper = new helper();
 
 $aFlags = array(0 => "owner_banner_arrived.png", 1 => "owner_banner_ordered.png", 2 => "owner_banner_wanted.png");
+$aFlagDesc = array(0 => "available", 1 => "ordered", 2 => "wanted");
 
 $getTags = "select * from tags";
 $aTags = $db->getAll($getTags);
@@ -403,7 +404,7 @@ foreach ($games as $game) {
 
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
-        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
+        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" .$ubannerName["NAME"]. " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
     }
     $genre = str_replace("||", "<br>", $game["GENRE"]);
     echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $genre . "</td></tr>";

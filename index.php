@@ -29,7 +29,7 @@ if (isset($_POST["groups"])) {
 <?php
 include_once("./core/dB.php");
 include_once("./core/helper.php");
-$bStatus=false;
+$bStatus = false;
 $db = new dB();
 $helper = new helper();
 
@@ -286,11 +286,19 @@ else {
                     if (isset($_POST["status"]) and $_POST["status"] == "false") {
                         echo " selected='selected'";
                     }
-                    echo ">Status</option><option value='0'";
+                    echo ">Status</option>";
+                    if (!isset($_COOKIE["selectedGroup"])) {
+                        echo "<option value='mine'";
+                        if (isset($_POST["status"]) and $_POST["status"] == "mine") {
+                            echo " selected='selected'";
+                        }
+                        echo ">mine</option>";
+                    }
+                    echo "<option value='0'";
                     if (isset($_POST["status"]) and $_POST["status"] == "0") {
                         echo " selected='selected'";
                     }
-                    echo ">arrived</option><option value='1'";
+                    echo ">available</option><option value='1'";
                     if (isset($_POST["status"]) and $_POST["status"] == "1") {
                         echo " selected='selected'";
                     }
@@ -346,8 +354,10 @@ if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
     $add .= " and GENRE like '%" . $_POST["Genre"] . "%'";
 }
 if (isset($_POST["status"]) && $_POST["status"] != "false") {
-    $add .= " and STATUS='" . $_POST["status"] . "'";
-    $bStatus=true;
+    if(!$_POST["status"] == "mine"){
+        $add .= " and STATUS='" . $_POST["status"] . "'";
+    }
+    $bStatus = true;
 }
 
 if (isset($_COOKIE["selectedGroup"])) {
@@ -357,8 +367,9 @@ if (isset($_COOKIE["selectedGroup"])) {
     else {
         $getGames = "Select distinct b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
     }
-}elseif($bStatus && isset($_COOKIE["loggedInBG"])){
-    $getGames = "Select b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='".$_COOKIE["loggedInBG"]."' and ERWEITERUNG is Null";
+}
+elseif ($bStatus && isset($_COOKIE["loggedInBG"])) {
+    $getGames = "Select b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='" . $_COOKIE["loggedInBG"] . "' and ERWEITERUNG is Null";
 }
 else {
     $getGames = "Select b.* from brettspiele as b where 1=1 and ERWEITERUNG is Null";
@@ -367,7 +378,6 @@ else {
 $add .= " order by MIN_P ,MAX_P, NAME";
 
 $getGames = $getGames . $add;
-
 $games = $db->getAll($getGames);
 $gameCount = count($games);
 $extBaseIDS = array();
@@ -404,7 +414,7 @@ foreach ($games as $game) {
 
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
-        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" .$ubannerName["NAME"]. " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
+        $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - " . $aFlagDesc[$ubannerName["STATUS"]] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
     }
     $genre = str_replace("||", "<br>", $game["GENRE"]);
     echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $genre . "</td></tr>";

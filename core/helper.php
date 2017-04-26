@@ -65,12 +65,12 @@ class helper
         return $ordner . $filename;
     }
 
-    public function getUser4Game($db, $gameID,$group,$userID)
+    public function getUser4Game($db, $gameID,$group= false,$userID="")
     {
         $formattedArray=array();
         if($group){
             $UserIDS= $db->getAll("Select u.*,u2g.STATUS from users as u join user2game as u2g on u.ID=u2g.IDUSER join user2group as u2gr on u.ID=u2gr.IDUSER where IDGAME ='" . $gameID . "' and u2gr.IDGROUP='" . $group . "'");
-        }elseif(true){
+        }else{
             $UserIDS= $db->getAll("Select u.*,u2g.STATUS from users as u join user2game as u2g on u.ID=u2g.IDUSER where u2g.IDGAME ='" . $gameID . "' and u.ID='" . $userID . "'");
         }
         foreach($UserIDS as $userData){

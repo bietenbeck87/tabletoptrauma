@@ -35,9 +35,16 @@ $helper = new helper();
 
 $aFlags = array(0 => "owner_banner_arrived.png", 1 => "owner_banner_ordered.png", 2 => "owner_banner_wanted.png");
 $aFlagDesc = array(0 => "available", 1 => "ordered", 2 => "wanted");
-
 $getTags = "select * from tags";
 $aTags = $db->getAll($getTags);
+
+$getTags2Game="Select b.ID,t.TAG from brettspiele as b left join game2tag as g2g on b.ID=g2g.IDGAME join tags as t on g2g.IDTAG=t.ID";
+$gameTags = $db->getAll($getTags2Game);
+$aGameTags = array();
+foreach($gameTags as $gameTag){
+    $aGameTags[$gameTag["ID"]][] = $gameTag["TAG"];
+}
+
 if (isset($_COOKIE["loggedInBG"])) {
     $getUserGroups = "Select g.* from groups as g join user2group as u2gr on g.ID=u2gr.IDGROUP where u2gr.IDUSER='" . $_COOKIE["loggedInBG"] . "'";
     $userGroups = $db->getAll($getUserGroups);
@@ -270,13 +277,13 @@ else {
                     <option value="false">Genre</option>
                     <?php
                     foreach ($aTags as $tag) {
-                        if (isset($_POST["Genre"]) && $_POST["Genre"] == $tag["TAG"]) {
+                        if (isset($_POST["Genre"]) && $_POST["Genre"] == $tag["ID"]) {
                             $sSelected = " selected='selected'";
                         }
                         else {
                             $sSelected = "";
                         }
-                        echo "<option" . $sSelected . ">" . $tag["TAG"] . "</option>";
+                        echo "<option value='".$tag["ID"]."' " . $sSelected . ">" . $tag["TAG"] . "</option>";
                     }
                     ?>
                 </Select>
@@ -339,40 +346,40 @@ $aKoop = array(0 => "Nein",
     4 => "Teams");
 $add = "";
 if (isset($_POST["namesearch"]) && $_POST["namesearch"] != "") {
-    $add = " and Name like '%" . $_POST["namesearch"] . "%'";
+    $add = " and b.NAME like '%" . $_POST["namesearch"] . "%'";
 }
 if (isset($_POST["playerCount"]) && $_POST["playerCount"] != "false") {
-    $add .= " and MIN_P <=" . $_POST["playerCount"] . " and MAX_P >=" . $_POST["playerCount"];
+    $add .= " and b.MIN_P <=" . $_POST["playerCount"] . " and b.MAX_P >=" . $_POST["playerCount"];
 }
 if (isset($_POST["playTime"]) && $_POST["playTime"] != "false") {
-    $add .= " and MAX_T <=" . $_POST["playTime"];
+    $add .= " and b.MAX_T <=" . $_POST["playTime"];
 }
 if (isset($_POST["Koop"]) && $_POST["Koop"] != "false") {
-    $add .= " and KOOP like '" . $_POST["Koop"] . "'";
+    $add .= " and b.KOOP like '" . $_POST["Koop"] . "'";
 }
 if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
-    $add .= " and GENRE like '%" . $_POST["Genre"] . "%'";
+    $add .= " and g2g.IDTAG ='" . $_POST["Genre"] . "'";
 }
 if (isset($_POST["status"]) && $_POST["status"] != "false") {
     if(!$_POST["status"] == "mine"){
-        $add .= " and STATUS='" . $_POST["status"] . "'";
+        $add .= " and u2g.STATUS='" . $_POST["status"] . "'";
     }
     $bStatus = true;
 }
 
 if (isset($_COOKIE["selectedGroup"])) {
     if (isset($_POST["besitzer"]) && $_POST["besitzer"] != "false") {
-        $getGames = "Select distinct b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2g.IDUSER ='" . $_POST["besitzer"] . "' and u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
+        $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2g.IDUSER ='" . $_POST["besitzer"] . "' and u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
     }
     else {
-        $getGames = "Select distinct b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
+        $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME join user2game as u2g on b.ID=u2g.IDGAME join user2group as u2gr on u2g.IDUSER =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' and ERWEITERUNG is Null";
     }
 }
 elseif ($bStatus && isset($_COOKIE["loggedInBG"])) {
-    $getGames = "Select b.* from brettspiele as b join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='" . $_COOKIE["loggedInBG"] . "' and ERWEITERUNG is Null";
+    $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='" . $_COOKIE["loggedInBG"] . "' and ERWEITERUNG is Null";
 }
 else {
-    $getGames = "Select b.* from brettspiele as b where 1=1 and ERWEITERUNG is Null";
+    $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME where 1=1 and ERWEITERUNG is Null";
 }
 
 $add .= " order by MIN_P ,MAX_P, NAME";
@@ -411,13 +418,16 @@ foreach ($games as $game) {
     else {
         $aBesitzer = array();
     }
-
+    if(isset($aGameTags[$game["ID"]])) {
+        $tags = implode("<br>", $aGameTags[$game["ID"]]);
+    }else{
+        $tags="";
+    }
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {
         $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - " . $aFlagDesc[$ubannerName["STATUS"]] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
     }
-    $genre = str_replace("||", "<br>", $game["GENRE"]);
-    echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $genre . "</td></tr>";
+    echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $tags . "</td></tr>";
     if ($rowEvenOdd == "odd") {
         $rowEvenOdd = "even";
     }

@@ -302,44 +302,47 @@ if (!$ext) {
     }
 
 
-    $sqlNearGames = "Select * from brettspiele where ERWEITERUNG is null and ID in (".$idTaggedGames.")";
-    $sqlNearGames .= " order by MIN_P ,MAX_P, NAME";
-    $genreSpecificGames = $db->getAll($sqlNearGames);
-    if (count($genreSpecificGames) >= 1) {
-        echo "<h2 class='accord'>Spiele mit gleichem Genre</h2><div class='genreGames accElement'>";
-        echo "<div class='singleTable'><table><tr id='head'><td>Bild</td><td>Name</td><td>Spieleranzahl</td><td>Spielzeit</td><td>Koop?</td><td>Genre</td></tr>";
-        $rowEvenOdd = "odd";
-        foreach ($genreSpecificGames as $specGame) {
+    if($idTaggedGames != "") {
+        $sqlNearGames = "Select * from brettspiele where ERWEITERUNG is null and ID in (" . $idTaggedGames . ")";
+        $sqlNearGames .= " order by MIN_P ,MAX_P, NAME";
+        $genreSpecificGames = $db->getAll($sqlNearGames);
+        if (count($genreSpecificGames) >= 1) {
+            echo "<h2 class='accord'>Spiele mit gleichem Genre</h2><div class='genreGames accElement'>";
+            echo "<div class='singleTable'><table><tr id='head'><td>Bild</td><td>Name</td><td>Spieleranzahl</td><td>Spielzeit</td><td>Koop?</td><td>Genre</td></tr>";
+            $rowEvenOdd = "odd";
+            foreach ($genreSpecificGames as $specGame) {
 
 
-            //Banner
-            if (isset($_COOKIE["selectedGroup"])) {
-                $aBesitzer = $helper->getUser4Game($db, $specGame["ID"], $_COOKIE["selectedGroup"], "");
+                //Banner
+                if (isset($_COOKIE["selectedGroup"])) {
+                    $aBesitzer = $helper->getUser4Game($db, $specGame["ID"], $_COOKIE["selectedGroup"], "");
+                }
+                elseif (isset($_COOKIE["loggedInBG"])) {
+                    $aBesitzer = $helper->getUser4Game($db, $specGame["ID"], "", $_COOKIE["loggedInBG"][0]);
+                }
+                else {
+                    $aBesitzer = array();
+                }
+                $banner = "";
+                if (isset($aGameTags[$specGame["ID"]])) {
+                    $tags = implode("<br>", $aGameTags[$specGame["ID"]]);
+                }
+                else {
+                    $tags = "";
+                }
+                foreach ($aBesitzer as $ubannerName) {
+                    $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - " . $aFlagDesc[$ubannerName["STATUS"]] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
+                }
+                echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $specGame["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $specGame["BILD"] . "'></div></div></a></td><td>" . $specGame["NAME"] . "</td><td>" . $specGame["MIN_P"] . " - " . $specGame["MAX_P"] . "</td><td>" . $specGame["MIN_T"] . " - " . $specGame["MAX_T"] . " min.</td><td>" . $aKoop[$specGame["KOOP"]] . "</td><td>" . $tags . "</td></tr>";
+                if ($rowEvenOdd == "odd") {
+                    $rowEvenOdd = "even";
+                }
+                else {
+                    $rowEvenOdd = "odd";
+                }
             }
-            elseif (isset($_COOKIE["loggedInBG"])) {
-                $aBesitzer = $helper->getUser4Game($db, $specGame["ID"], "", $_COOKIE["loggedInBG"][0]);
-            }
-            else {
-                $aBesitzer = array();
-            }
-            $banner = "";
-            if(isset($aGameTags[$specGame["ID"]])) {
-                $tags = implode("<br>", $aGameTags[$specGame["ID"]]);
-            }else{
-                $tags="";
-            }
-            foreach ($aBesitzer as $ubannerName) {
-                $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - ".$aFlagDesc[$ubannerName["STATUS"]]."'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/".$aFlags[$ubannerName["STATUS"]]."'></div>";
-            }
-            echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $specGame["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $specGame["BILD"] . "'></div></div></a></td><td>" . $specGame["NAME"] . "</td><td>" . $specGame["MIN_P"] . " - " . $specGame["MAX_P"] . "</td><td>" . $specGame["MIN_T"] . " - " . $specGame["MAX_T"] . " min.</td><td>" . $aKoop[$specGame["KOOP"]] . "</td><td>" . $tags . "</td></tr>";
-            if ($rowEvenOdd == "odd") {
-                $rowEvenOdd = "even";
-            }
-            else {
-                $rowEvenOdd = "odd";
-            }
+            echo "</table></div></div>";
         }
-        echo "</table></div></div>";
     }
 }
 else {

@@ -11,12 +11,6 @@
 <body>
 <?php
 $id = $_GET["id"];
-if ($_SERVER["HTTP_HOST"] == "bg.as-cf.de") {
-    $inDIR = "";
-}
-else {
-    $inDIR = "brettspiele/";
-}
 $aBestelltArray = array(0 => "ist angekommen", 1 => "wurde bestellt", 2 => "wurde zur Wantsliste hinzugefügt");
 $aFlags = array(0 =>"owner_banner_arrived.png",1=>"owner_banner_ordered.png",2=>"owner_banner_wanted.png");
 $aFlagDesc = array(0 => "available", 1 => "ordered", 2 => "wanted");
@@ -429,7 +423,7 @@ else {
         echo "<h2 class='accord'>Bilder:</h2><div id='uimgs' class='accElement'>";
 
         foreach ($imgs as $img) {
-            echo "<a href='http://" . $_SERVER["HTTP_HOST"] . "/" . $inDIR . $img["path"] . "' data-lightbox='gameImages'><img src='" . $img["thumb"] . "'></a>";
+            echo "<a href='http://" . $_SERVER["HTTP_HOST"] . "/" . $img["path"] . "' data-lightbox='gameImages'><img src='" . $img["thumb"] . "'></a>";
         }
         echo "</div>";
     }

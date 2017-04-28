@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if (isset($_POST["groups"])) {
     if ($_POST["groups"] == "false") {
         if (isset($_COOKIE["selectedGroup"])) {
@@ -346,23 +346,23 @@ $aKoop = array(0 => "Nein",
     4 => "Teams");
 $add = "";
 if (isset($_POST["namesearch"]) && $_POST["namesearch"] != "") {
-    $add = " and b.NAME like '%" . $_POST["namesearch"] . "%'";
+    $add = " and b.NAME like '%" .mysql_real_escape_string($_POST["namesearch"]) . "%'";
 }
 if (isset($_POST["playerCount"]) && $_POST["playerCount"] != "false") {
-    $add .= " and b.MIN_P <=" . $_POST["playerCount"] . " and b.MAX_P >=" . $_POST["playerCount"];
+    $add .= " and b.MIN_P <=" . mysql_real_escape_string($_POST["playerCount"]) . " and b.MAX_P >=" . mysql_real_escape_string($_POST["playerCount"]);
 }
 if (isset($_POST["playTime"]) && $_POST["playTime"] != "false") {
-    $add .= " and b.MAX_T <=" . $_POST["playTime"];
+    $add .= " and b.MAX_T <=" . mysql_real_escape_string($_POST["playTime"]);
 }
 if (isset($_POST["Koop"]) && $_POST["Koop"] != "false") {
-    $add .= " and b.KOOP like '" . $_POST["Koop"] . "'";
+    $add .= " and b.KOOP like '" . mysql_real_escape_string($_POST["Koop"]) . "'";
 }
 if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
-    $add .= " and g2g.IDTAG ='" . $_POST["Genre"] . "'";
+    $add .= " and g2g.IDTAG ='" . mysql_real_escape_string($_POST["Genre"]) . "'";
 }
 if (isset($_POST["status"]) && $_POST["status"] != "false") {
     if(!$_POST["status"] == "mine"){
-        $add .= " and u2g.STATUS='" . $_POST["status"] . "'";
+        $add .= " and u2g.STATUS='" . mysql_real_escape_string($_POST["status"]) . "'";
     }
     $bStatus = true;
 }

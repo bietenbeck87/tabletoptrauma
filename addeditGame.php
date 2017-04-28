@@ -23,7 +23,7 @@ $extendsID = "";
 if (isset($_GET["GameID"])) {
     $gameID = $_GET["GameID"];
     $extendsID = " and ID!=$gameID";
-    $gameSQL = "select * from brettspiele where ID =" . $gameID;
+    $gameSQL = "select * from brettspiele where ID =" . mysql_real_escape_string($gameID);
     $game = $db->getAll($gameSQL)[0];
     $statusID = $game["BESTELLT"];
     if(isset($aGameTags[$game["ID"]])) {
@@ -40,7 +40,7 @@ if (isset($_GET["GameID"])) {
     }
 }
 if (isset($_COOKIE["loggedInBG"])) {
-    $LoggedInuser = $db->getAll("select * from users where ID=" . $_COOKIE["loggedInBG"])[0];
+    $LoggedInuser = $db->getAll("select * from users where ID=" . mysql_real_escape_string($_COOKIE["loggedInBG"])[0]);
 }
 
 
@@ -80,13 +80,13 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
                 }
             }
         }
-        $sqlAddEdit = "Update brettspiele set NAME='" . mysql_real_escape_string($_POST["name"]) . "',DESCRIPTION='" . mysql_real_escape_string($_POST["description"]) . "', MIN_P='" . $_POST["min_p"] . "',MAX_P='" . $_POST["max_p"] . "',MIN_T='" . $_POST["min_t"] . "',MAX_T='" . $_POST["max_t"] . "',URL='" . $_POST["url"] . "',BILD='" . $_POST["img"] . "',YOUTUBE='" . $_POST["yt"] . "',KOOP='" . $_POST["koop"] . "',ERBT='" . $extensionList . "' where ID='" . $IDGame . "'";
+        $sqlAddEdit = "Update brettspiele set NAME='" . mysql_real_escape_string($_POST["name"]) . "',DESCRIPTION='" . mysql_real_escape_string($_POST["description"]) . "', MIN_P='" . mysql_real_escape_string($_POST["min_p"]) . "',MAX_P='" . mysql_real_escape_string($_POST["max_p"]) . "',MIN_T='" . mysql_real_escape_string($_POST["min_t"]) . "',MAX_T='" . mysql_real_escape_string($_POST["max_t"]) . "',URL='" . mysql_real_escape_string($_POST["url"]) . "',BILD='" . mysql_real_escape_string($_POST["img"]) . "',YOUTUBE='" . mysql_real_escape_string($_POST["yt"]) . "',KOOP='" . mysql_real_escape_string($_POST["koop"]) . "',ERBT='" . mysql_real_escape_string($extensionList) . "' where ID='" . mysql_real_escape_string($IDGame) . "'";
 
         if (isset($_POST['genre'])) {
             $aTags = $_POST['genre'];
-            $db->execute("delete from game2tag where IDGAME='".$IDGame."'");
+            $db->execute("delete from game2tag where IDGAME='".mysql_real_escape_string($IDGame)."'");
             foreach ($aTags as $tag) {
-              $insertTag = "Insert into game2tag(IDGAME,IDTAG) value ('".$IDGame."','".$tag."')";
+              $insertTag = "Insert into game2tag(IDGAME,IDTAG) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($tag)."')";
                 $db->execute($insertTag);
             }
         }
@@ -94,14 +94,14 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
     else {
         if (isset($_POST["GameIDExt"])) {
 
-            $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG='" . $_POST["GameIDExt"] . "'");
+            $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG='" . mysql_real_escape_string($_POST["GameIDExt"]). "'");
             if ($highestID) {
                 $IDGame = $highestID + 1;
             }
             else {
                 $IDGame = $_POST["GameIDExt"] + 1;
             }
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["GameIDExt"] . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','','".$LoggedInuser["ID"]."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame). "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["GameIDExt"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             if (isset($_POST['genre'])) {
                 $aTags = $_POST['genre'];
                 foreach ($aTags as $tag) {
@@ -109,27 +109,27 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
                     $db->execute($insertTag);
                 }
             }
-            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
+            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($LoggedInuser["ID"])."','".mysql_real_escape_string($bestellt)."')";
             $db->execute($sqlUser2Game);
             $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["Name"] . " " . $aBestelltArray[$bestellt];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $IDGame . "','" . $message . "','".$LoggedInuser["ID"]."')";
+            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             $db->execute($newsSQL);
         }
         else {
             $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG is NULL");
             $IDGame = $highestID + 100;
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . $IDGame . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . $_POST["min_p"] . "','" . $_POST["max_p"] . "','" . $_POST["min_t"] . "','" . $_POST["max_t"] . "','" . $_POST["url"] . "','" . $_POST["img"] . "','" . $_POST["yt"] . "','" . $_POST["koop"] . "','" . $extensionList . "','".$LoggedInuser["ID"]."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','" . mysql_real_escape_string($extensionList) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             if (isset($_POST['genre'])) {
                 $aTags = $_POST['genre'];
                 foreach ($aTags as $tag) {
-                  $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('".$IDGame."','".$tag."')";
+                  $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($tag)."')";
                     $db->execute($insertTag);
                 }
             }
-            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".$IDGame."','".$LoggedInuser["ID"]."','".$bestellt."')";
+            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($LoggedInuser["ID"])."','".mysql_real_escape_string($bestellt)."')";
             $db->execute($sqlUser2Game);
             $message = "Das Spiel \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $IDGame . "','" . $message . "','".$LoggedInuser["ID"]."')";
+            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             $db->execute($newsSQL);
         }
     }

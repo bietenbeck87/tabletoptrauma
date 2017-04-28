@@ -11,19 +11,19 @@ $GameList = $db->getAll($GameListSQL);
 if (isset($_POST["date"])) {
     $games = implode("||", $_POST["games"]);
 
-    $SQLINSERT = "INSERT INTO termine (DATE,TIME,WHO,PLACE,GAMES,IDGROUP,IDUSER) value ('" . $_POST["date"] . "','" . $_POST["time"] . "','" . $_POST["who"] . "','" . $_POST["place"] . "','" . $games . "','".$_POST["id"]."','".$_COOKIE["loggedInBG"]."')";
+    $SQLINSERT = "INSERT INTO termine (DATE,TIME,WHO,PLACE,GAMES,IDGROUP,IDUSER) value ('" . mysql_real_escape_string($_POST["date"]) . "','" . mysql_real_escape_string($_POST["time"]) . "','" . mysql_real_escape_string($_POST["who"]) . "','" . mysql_real_escape_string($_POST["place"]) . "','" . mysql_real_escape_string($games) . "','".mysql_real_escape_string($_POST["id"])."','".mysql_real_escape_string($_COOKIE["loggedInBG"])."')";
     $db->execute($SQLINSERT);
 }
 if (isset($_GET["delete"])) {
-    $SQLDELETE = "DELETE from termine where ID='" . $_GET["delete"] . "'";
+    $SQLDELETE = "DELETE from termine where ID='" . mysql_real_escape_string($_GET["delete"]). "'";
     $db->execute($SQLDELETE);
 }
 echo "<a href='index.php'><div id='BackBtn'>Zurück</div></a>";
 if ((isset($_GET["id"]) && $_GET["id"] != "")) {
     $groupID = $_GET["id"];
-    $selectedGroup = $db->getAll("Select * from groups where ID='" . $groupID . "'");
+    $selectedGroup = $db->getAll("Select * from groups where ID='" . mysql_real_escape_string($groupID). "'");
     if ($selectedGroup) {
-        $SQLGET = "SELECT * from termine where IDGROUP='".$groupID."' order by DATE desc, TIME desc";
+        $SQLGET = "SELECT * from termine where IDGROUP='".mysql_real_escape_string($groupID)."' order by DATE desc, TIME desc";
         $DATES = $db->getAll($SQLGET);
         if (isset($_COOKIE["loggedInBG"])) {
             echo

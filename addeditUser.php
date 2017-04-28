@@ -2,13 +2,13 @@
 include_once("./core/dB.php");
 $db = new dB();
 if (isset($_GET["ID"])) {
-    $user = $db->getAll("Select * from users where ID='" . $_GET["ID"] . "'");
+    $user = $db->getAll("Select * from users where ID='" . mysql_real_escape_string($_GET["ID"]) . "'");
 }
 if (isset($_POST["id"])) {
-    $user = $db->getAll("Select * from users where ID='" . $_POST["id"] . "'");
+    $user = $db->getAll("Select * from users where ID='" . mysql_real_escape_string($_POST["id"]) . "'");
     if (isset($_POST["newpassword"]) && $_POST["newpassword"] != "") {
         if (md5($_POST["oldpassword"]) == $user[0]["PW"]) {
-            $db->execute("update users set PW='" . md5($_POST["newpassword"]) . "', FLAGCOLOR='" . $_POST["colorflag"] . "' where ID='" . $user[0]["ID"] . "'");
+            $db->execute("update users set PW='" . md5($_POST["newpassword"]) . "', FLAGCOLOR='" . mysql_real_escape_string($_POST["colorflag"]) . "' where ID='" . mysql_real_escape_string($user[0]["ID"]) . "'");
             echo "Data saved!";
         }
         else {
@@ -16,18 +16,18 @@ if (isset($_POST["id"])) {
         }
     }
     else {
-        $db->execute("update users set FLAGCOLOR='" . $_POST["colorflag"] . "' where ID='" . $user[0]["ID"] . "'");
+        $db->execute("update users set FLAGCOLOR='" . mysql_real_escape_string($_POST["colorflag"]) . "' where ID='" . mysql_real_escape_string($user[0]["ID"]) . "'");
     }
-    $user = $db->getAll("Select * from users where ID='" . $_POST["id"] . "'");;
+    $user = $db->getAll("Select * from users where ID='" . mysql_real_escape_string($_POST["id"]) . "'");;
 }
 elseif (isset($_POST["name"])) {
-    $identicalUser = $db->getAll("select * from users where EMAIL='" . $_POST["mail"] . "'");
+    $identicalUser = $db->getAll("select * from users where EMAIL='" . mysql_real_escape_string($_POST["mail"]) . "'");
     if ($identicalUser) {
         echo "user with E-mail allready exists";
     }
     else {
-        $db->execute("insert into users (NAME,EMAIL,PW,FLAGCOLOR) value ('" . $_POST["name"] . "','" . $_POST["mail"] . "','" . md5($_POST["password"]) . "','" . $_POST["colorflag"] . "')");
-        $user = $db->getAll("select * from users where EMAIL='" . $_POST["mail"] . "'");
+        $db->execute("insert into users (NAME,EMAIL,PW,FLAGCOLOR) value ('" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["mail"]) . "','" . md5($_POST["password"]) . "','" . mysql_real_escape_string($_POST["colorflag"]) . "')");
+        $user = $db->getAll("select * from users where EMAIL='" . mysql_real_escape_string($_POST["mail"]) . "'");
         setcookie("loggedInBG", $user[0]["ID"], time() + 18000);
         header('Location: index.php');
     }

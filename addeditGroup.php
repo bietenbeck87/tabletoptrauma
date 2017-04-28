@@ -3,16 +3,16 @@ include_once("./core/dB.php");
 $db = new dB();
 
 if(isset($_GET["id"])){
-    $group = $db->getAll("Select * from groups where ID='".$_GET["id"]."'");
+    $group = $db->getAll("Select * from groups where ID='".mysql_real_escape_string($_GET["id"])."'");
 }
 if(isset($_POST["groupID"])){
-    $db->execute("update groups set NAME = '".$_POST["name"]."', GROUPPIC='". $_POST["picture"]."' where ID='".$_POST["groupID"]."'");
+    $db->execute("update groups set NAME = '".mysql_real_escape_string($_POST["name"])."', GROUPPIC='". mysql_real_escape_string($_POST["picture"])."' where ID='".mysql_real_escape_string($_POST["groupID"])."'");
     header('Location: index.php');
 }else {
     if (isset($_POST["name"]) && isset($_COOKIE["loggedInBG"])) {
-        $db->execute("insert into groups (NAME,GROUPADMIN,GROUPPIC) value ('" . $_POST["name"] . "','" . $_COOKIE["loggedInBG"] . "','" . $_POST["picture"] . "',)");
-        $createdGroup = $db->getAll("select * from groups where NAME='" . $_POST["name"] . "' and GROUPADMIN='" . $_COOKIE["loggedInBG"] . "' order by ID desc limit 1");
-        $db->execute("insert into user2group (IDUSER,IDGROUP) value ('" . $_COOKIE["loggedInBG"] . "','" . $createdGroup[0]["ID"] . "')");
+        $db->execute("insert into groups (NAME,GROUPADMIN,GROUPPIC) value ('" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($_POST["picture"]) . "',)");
+        $createdGroup = $db->getAll("select * from groups where NAME='" . mysql_real_escape_string($_POST["name"]) . "' and GROUPADMIN='" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "' order by ID desc limit 1");
+        $db->execute("insert into user2group (IDUSER,IDGROUP) value ('" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($createdGroup[0]["ID"]) . "')");
         header('Location: index.php');
     }
 }

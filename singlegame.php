@@ -31,7 +31,7 @@ $aKoop = array(0 => "Nein",
     4 => "Teams");
 $db = new dB();
 $helper = new helper();
-$getGame = "select * from brettspiele where ID=" . $id;
+$getGame = "select * from brettspiele where ID=" . mysql_real_escape_string($id);
 $game = $db->getAll($getGame);
 $game = $game[0];
 
@@ -62,37 +62,36 @@ if(isset($aGameTags[$game["ID"]])){
 }
 
 if (isset($_GET["status"]) && $_COOKIE["loggedInBG"]) {
-    $loggedInUser = $db->getAll("Select * from users where ID='" . $_COOKIE["loggedInBG"] . "'");
-    $user2Game = $db->getAll("Select * from user2game where IDUSER='" . $_COOKIE["loggedInBG"] . "' and IDGAME='" . $game["ID"] . "'");
+    $loggedInUser = $db->getAll("Select * from users where ID='" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "'");
+    $user2Game = $db->getAll("Select * from user2game where IDUSER='" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "' and IDGAME='" . mysql_real_escape_string($game["ID"]) . "'");
     if (isset($user2Game[0])) {
         if ($_GET["status"] == "delete") {
-            $db->execute("Delete from user2game where id='" . $user2Game[0]["ID"] . "'");
+            $db->execute("Delete from user2game where id='" . mysql_real_escape_string($user2Game[0]["ID"]) . "'");
         }
         else {
-            $db->execute("Update user2game set STATUS='" . $_GET["status"] . "' where id='" . $user2Game[0]["ID"] . "'");
+            $db->execute("Update user2game set STATUS='" . mysql_real_escape_string($_GET["status"]) . "' where id='" . mysql_real_escape_string($user2Game[0]["ID"]) . "'");
             if ($game["ERWEITERUNG"]) {
                 $message = "Die Erweiterung \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
-                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $game["ID"] . "','" . $message . "','" . $loggedInUser[0]["ID"] . "')";
+                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
                 $db->execute($newsSQL);
             }
             else {
                 $message = "Das Spiel \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
-                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $game["ID"] . "','" . $message . "','" . $loggedInUser[0]["ID"] . "')";
+                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
                 $db->execute($newsSQL);
             }
         }
     }
     else {
-        $test = "Insert into user2game (IDGAME,IDUSER,STATUS) value ('" . $game["ID"] . "','" . $_COOKIE["loggedInBG"] . "','" . $_GET["status"] . "'";
-        $db->execute("Insert into user2game (IDGAME,IDUSER,STATUS) value ('" . $game["ID"] . "','" . $_COOKIE["loggedInBG"] . "','" . $_GET["status"] . "')");
+        $db->execute("Insert into user2game (IDGAME,IDUSER,STATUS) value ('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($_GET["status"]) . "')");
         if ($game["ERWEITERUNG"]) {
             $message = "Die Erweiterung \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $game["ID"] . "','" . $message . "','" . $loggedInUser[0]["ID"] . "')";
+            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
             $db->execute($newsSQL);
         }
         else {
             $message = "Das Spiel \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . $game["ID"] . "','" . $message . "','" . $loggedInUser[0]["ID"] . "')";
+            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
             $db->execute($newsSQL);
         }
     }
@@ -107,8 +106,8 @@ else {
 $extensions = $db->getAll($getExtensions);
 if ($game["ERWEITERUNG"]) {
     $ext = true;
-    $baseGame = $db->getAll("select * from brettspiele where ID=" . $game["ERWEITERUNG"])[0];
-    $extendsBaseGame = $db->getAll("select * from brettspiele where ERBT=" . $baseGame["ID"]);
+    $baseGame = $db->getAll("select * from brettspiele where ID=" . mysql_real_escape_string($game["ERWEITERUNG"])[0]);
+    $extendsBaseGame = $db->getAll("select * from brettspiele where ERBT=" . mysql_real_escape_string($baseGame["ID"]));
 }
 echo "<a href='index.php'><div id='BackBtn'>Zurück</div></a>";
 echo "

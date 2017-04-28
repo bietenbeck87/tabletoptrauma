@@ -4,16 +4,16 @@ $db = new dB();
 if (isset($_POST['Name']) && $_POST['Password']) {
     $Name = $_POST['Name'];
     $Password = md5($_POST['Password']);
-    $statement = "SELECT ID FROM users WHERE EMAIL = '" . $Name . "' and PW='" .$Password. "'";
+    $statement = "SELECT ID FROM users WHERE EMAIL = '" . mysql_real_escape_string($Name) . "' and PW='" .$Password. "'";
     $ID = $db->getOne($statement);
     if ($ID) {
         if ($_POST["groupid"]) {
-            $getGroup = "Select * from groups where ID='" . $_POST["groupid"] . "'";
+            $getGroup = "Select * from groups where ID='" . mysql_real_escape_string($_POST["groupid"]) . "'";
             $group = $db->getAll($getGroup)[0];
             if (md5($group["NAME"]) == $_POST["grouphash"]) {
-                $checkUser = $db->getAll("Select * from user2group where IDGROUP='" . $_POST["groupid"] . "' and IDUSER='" . $ID . "'");
+                $checkUser = $db->getAll("Select * from user2group where IDGROUP='" . mysql_real_escape_string($_POST["groupid"]) . "' and IDUSER='" . mysql_real_escape_string($ID) . "'");
                 if (!$checkUser) {
-                    $db->execute("insert into user2group (IDUSER,IDGROUP) value ('" . $ID . "','" . $_POST["groupid"] . "')");
+                    $db->execute("insert into user2group (IDUSER,IDGROUP) value ('" . mysql_real_escape_string($ID) . "','" . mysql_real_escape_string($_POST["groupid"]) . "')");
                 }
             }
         }

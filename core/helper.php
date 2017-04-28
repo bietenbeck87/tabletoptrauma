@@ -78,5 +78,20 @@ class helper
         }
         return $formattedArray;
     }
+    function grab_image($url,$saveto){
+        if(!file_exists($saveto)){
+           mkdir($saveto,0777,true);
+        }
+        $PicPath = $saveto."/thumb.jpg";
+        $ch = curl_init ($url);
+        $fp = fopen ($PicPath, 'w+');
+        curl_setopt($ch, CURLOPT_FILE, $fp);
+        curl_setopt($ch, CURLOPT_REFERER, 'https://boardgamegeek.com/');
+        $findsomething = curl_exec($ch);
+        curl_close ($ch);
+        fclose($fp);
+
+        return $PicPath;
+    }
 
 }

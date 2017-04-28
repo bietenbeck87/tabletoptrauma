@@ -29,6 +29,7 @@ if (isset($_POST["groups"])) {
 <?php
 include_once("./core/dB.php");
 include_once("./core/helper.php");
+
 $bStatus = false;
 $db = new dB();
 $helper = new helper();
@@ -407,6 +408,12 @@ echo "<div id='gameTableDiv'><table><tr id='head'><td>Bild</td><td>Name</td><td>
 
 $rowEvenOdd = "odd";
 foreach ($games as $game) {
+    if(!file_exists("./uploads/".$game["ID"]."/thumb/thumb.jpg")){
+        $mainIMG =$helper->grab_image($game["BILD"],"./uploads/".$game["ID"]."/thumb");
+    }else{
+        $mainIMG= "./uploads/".$game["ID"]."/thumb/thumb.jpg";
+    }
+
 
     //Banner
     if (isset($_COOKIE["selectedGroup"])) {
@@ -427,7 +434,7 @@ foreach ($games as $game) {
     foreach ($aBesitzer as $ubannerName) {
         $banner .= "<div class='banner' style='background:#" . $ubannerName["FLAGCOLOR"] . ";' title='" . $ubannerName["NAME"] . " - " . $aFlagDesc[$ubannerName["STATUS"]] . "'><div class='shortName'>" . substr($ubannerName["NAME"], 0, 1) . "</div><img  src='./src/img/" . $aFlags[$ubannerName["STATUS"]] . "'></div>";
     }
-    echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $game["BILD"] . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $tags . "</td></tr>";
+    echo "<tr class='" . $rowEvenOdd . "'><td><a href=singlegame.php?id=" . $game["ID"] . "><div class='packed'><div class='Banner_div'>" . $banner . "</div><div class='mainImg'><img src='" . $mainIMG . "'></div></div></a></td><td>" . $game["NAME"] . "</td><td>" . $game["MIN_P"] . " - " . $game["MAX_P"] . "</td><td>" . $game["MIN_T"] . " - " . $game["MAX_T"] . " min.</td><td>" . $aKoop[$game["KOOP"]] . "</td><td>" . $tags . "</td></tr>";
     if ($rowEvenOdd == "odd") {
         $rowEvenOdd = "even";
     }

@@ -80,6 +80,14 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
                 }
             }
         }
+        $oldGameSQL = "Select * from brettspiele where ID='".$IDGame."'";
+        $oldGame = $db->getAll($oldGameSQL)[0];
+        if($oldGame["BILD"] != $_POST["img"]){
+            if(file_exists("./uploads/".$IDGame."/thumb/thumb.jpg")) {
+                unlink("./uploads/" . $IDGame . "/thumb/thumb.jpg");
+            }
+        }
+
         $sqlAddEdit = "Update brettspiele set NAME='" . mysql_real_escape_string($_POST["name"]) . "',DESCRIPTION='" . mysql_real_escape_string($_POST["description"]) . "', MIN_P='" . mysql_real_escape_string($_POST["min_p"]) . "',MAX_P='" . mysql_real_escape_string($_POST["max_p"]) . "',MIN_T='" . mysql_real_escape_string($_POST["min_t"]) . "',MAX_T='" . mysql_real_escape_string($_POST["max_t"]) . "',URL='" . mysql_real_escape_string($_POST["url"]) . "',BILD='" . mysql_real_escape_string($_POST["img"]) . "',YOUTUBE='" . mysql_real_escape_string($_POST["yt"]) . "',KOOP='" . mysql_real_escape_string($_POST["koop"]) . "',ERBT='" . mysql_real_escape_string($extensionList) . "' where ID='" . mysql_real_escape_string($IDGame) . "'";
 
         if (isset($_POST['genre'])) {

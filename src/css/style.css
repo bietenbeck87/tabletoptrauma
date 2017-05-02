@@ -663,6 +663,13 @@ form {
 #waimg{
     height:30px;
 }
+#selectGenre{
+    height: 110px;
+}
+#editGames input,textarea,select {
+    width: 100%;
+}
+
 
 
 @media only screen and (max-width: 940px) {

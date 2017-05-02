@@ -156,7 +156,7 @@ if ($IDGame) {
 </a>
 
 <div class="editForm">
-    <form name="addeditform" action="addeditGame.php" method="post" onsubmit="return validateForm()">
+    <form name="addeditform" id="editGames" action="addeditGame.php" method="post" onsubmit="return validateForm()">
         <fieldset>
             <?php if ($b) {
                 echo "<input type='hidden' name='GameID' value='" . $gameID . "'>";
@@ -167,7 +167,7 @@ if ($IDGame) {
             echo "<input type='hidden' name='StatusID' value='" . $statusID . "'>";
             ?>
             <label>*Spiel-Name:</label><input type="text" name="name" <?php if ($b) {
-                echo "value='" . $game['NAME'] . "'";
+                echo "value='" . htmlentities($game['NAME'], ENT_QUOTES, "UTF-8"). "'";
             } ?>>
             <label>*Min. Spielerzahl:</label><input type="text" name="min_p" <?php if ($b || $ext) {
                 echo "value='" . $game['MIN_P'] . "'";
@@ -183,7 +183,7 @@ if ($IDGame) {
             } ?>>
             <label>Beschreibung:</label>
 		<textarea name='description'><?php if ($b || $ext) {
-                echo $game['DESCRIPTION'];
+                echo htmlentities($game['DESCRIPTION'], ENT_QUOTES, "UTF-8");
             } ?></textarea>
             <label>*URL:</label><input type="text" name="url" <?php if ($b) {
                 echo "value='" . $game['URL'] . "'";
@@ -195,7 +195,7 @@ if ($IDGame) {
                 echo "value='" . $game['YOUTUBE'] . "'";
             } ?>>
             <label>Koop:</label>
-            <Select name="koop">
+            <Select id="selectKoop" name="koop">
                 <option value="0" <?php if ($b && $game['KOOP'] == "0") {
                     echo "selected='selected'";
                 } ?>>Nein
@@ -218,7 +218,7 @@ if ($IDGame) {
                 </option>
             </Select>
             <label>Genre:</label>
-            <select multiple="multiple" name="genre[]">
+            <select id="selectGenre" multiple="multiple" name="genre[]">
                 <?php
                 foreach ($aTags as $tag) {
                     if ($b && in_array($tag["TAG"], $genre)) {
@@ -253,7 +253,7 @@ if ($IDGame) {
         </br>
         <?php
         if (!$ext) {
-            echo '<fieldset><label>Erweiterungen erben von:</label><select multiple="multiple" name="extends[]">';
+            echo '<fieldset><label>Erweiterungen erben von:</label><select id="selectExtends" multiple="multiple" name="extends[]">';
             foreach ($extendsList as $extends) {
                 if (in_array($extends["ID"], $ExtList)) {
                     $sSelected = " selected='selected'";

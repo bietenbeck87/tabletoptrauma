@@ -347,7 +347,7 @@ $aKoop = array(0 => "Nein",
     4 => "Teams");
 $add = "";
 if (isset($_POST["namesearch"]) && $_POST["namesearch"] != "") {
-    $add = " and b.NAME like '%" .mysql_real_escape_string($_POST["namesearch"]) . "%'";
+    $add = " and b.NAME like '%" .mysql_real_escape_string(trim($_POST["namesearch"])) . "%'";
 }
 if (isset($_POST["playerCount"]) && $_POST["playerCount"] != "false") {
     $add .= " and b.MIN_P <=" . mysql_real_escape_string($_POST["playerCount"]) . " and b.MAX_P >=" . mysql_real_escape_string($_POST["playerCount"]);

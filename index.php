@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 if (isset($_POST["groups"])) {
     if ($_POST["groups"] == "false") {
         if (isset($_COOKIE["selectedGroup"])) {

@@ -12,7 +12,8 @@ $xml = simplexml_load_string($xmlstring);
 $json = json_encode($xml);
 $array = json_decode($json,TRUE);
 $rowEvenOdd = "odd";
-echo "<a href='index.php'><div id='BackBtn'>Zurück</div></a>";
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 echo "<table class='hotlisttable'>";
 echo "<tr class='head'><td>RANK:</td><td>BILD:</td><td>Name</td><td>ERSCHEINUNGS-JAHR:</td></tr>";
 foreach($array["item"] as $gameData){

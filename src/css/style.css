@@ -329,7 +329,7 @@ ul {
     padding:5px;
     text-align: center;
 }
-#BackBtn{
+.BackBtn{
     background: #ccc none repeat scroll 0 0;
     box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
     border: 2px dashed #999;
@@ -341,10 +341,16 @@ ul {
     text-decoration: none;
     color: #3f3f3f;
 }
-#BackBtn:hover{
+.BackBtn:hover{
     background: #aaa none repeat scroll 0 0;
     box-shadow: none;
     border: 2px solid #888;
+}
+.BackBtn.rightBtn {
+    float: right;
+}
+.BackBtn.leftBtn {
+    float: left;
 }
 
 a{

@@ -42,9 +42,10 @@ elseif (isset($_POST["name"])) {
 <script src="./src/js/color.js"></script>
 <script src="./src/js/validateuser.js"></script>
 
-<a href='index.php'>
-    <div id="BackBtn">Zurück</div>
-</a>
+<?php
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+?>
 <div class="editForm">
     <form name="addeditform" action="addeditUser.php" method="post" onsubmit="return validateForm()">
         <?php

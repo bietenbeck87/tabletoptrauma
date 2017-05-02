@@ -18,7 +18,8 @@ if (isset($_GET["delete"])) {
     $SQLDELETE = "DELETE from termine where ID='" . mysql_real_escape_string($_GET["delete"]). "'";
     $db->execute($SQLDELETE);
 }
-echo "<a href='index.php'><div id='BackBtn'>Zurück</div></a>";
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 if ((isset($_GET["id"]) && $_GET["id"] != "")) {
     $groupID = $_GET["id"];
     $selectedGroup = $db->getAll("Select * from groups where ID='" . mysql_real_escape_string($groupID). "'");

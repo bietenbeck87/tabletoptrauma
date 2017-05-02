@@ -15,9 +15,10 @@ foreach($shops as $shop){
 <meta charset="utf-8"/>
 <title>SHOPS</title>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
-<a href='index.php'>
-    <div id="BackBtn">Zurück</div>
-</a>
+<?php
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+?>
 <div id="SiteDiv">
     <?php
     foreach($aShops as $type =>$aShopContainter){

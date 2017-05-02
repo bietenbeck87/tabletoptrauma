@@ -23,9 +23,10 @@ if(isset($_POST["groupID"])){
 <script src="./src/js/jquery-3.2.1.min.js"></script>
 <script src="./src/js/validategroup.js"></script>
 
-<a href='index.php'>
-    <div id="BackBtn">Zurück</div>
-</a>
+<?php
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+?>
 <div class="editForm">
     <form name="addeditform" action="addeditGroup.php" method="post" onsubmit="return validateForm()">
         <label>GroupName:</label><input type="text" name="name" <?php if(isset($group)){ echo "value='".$group[0]["NAME"]."'";} ?>>

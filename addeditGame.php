@@ -151,6 +151,10 @@ if ($IDGame) {
 <title>TABLETOP TRAUMA</title>
 <script language="javascript" type="text/javascript" src="./src/js/validateeditgames.js"></script>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
+<?php
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+?>
 <a href="http://www.boardgamegeek.com" target="_blank">
     <button>Open BoardGameGeek</button>
 </a>

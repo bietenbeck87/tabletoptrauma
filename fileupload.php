@@ -15,6 +15,10 @@ if(isset($_FILES['datei'])){
 <meta charset="utf-8"/>
 <title>UPLOAD</title>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
+<?php
+echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+?>
 <h2>File-Upload:</h2>
 <div id="uploadForm"><form action="fileupload.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="GameID" value="<?php echo $id; ?>">

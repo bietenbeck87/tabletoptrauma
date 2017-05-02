@@ -1,6 +1,7 @@
 <meta charset="utf-8"/>
 <title>Termine</title>
 <script language="javascript" type="text/javascript" src="./src/js/validatedates.js"></script>
+<script src="./src/js/goBack.js"></script>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
 <?php
 include_once("./core/dB.php");
@@ -18,7 +19,7 @@ if (isset($_GET["delete"])) {
     $SQLDELETE = "DELETE from termine where ID='" . mysql_real_escape_string($_GET["delete"]). "'";
     $db->execute($SQLDELETE);
 }
-echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 if ((isset($_GET["id"]) && $_GET["id"] != "")) {
     $groupID = $_GET["id"];

@@ -40,10 +40,11 @@ elseif (isset($_POST["name"])) {
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
 <script src="./src/js/jquery-3.2.1.min.js"></script>
 <script src="./src/js/color.js"></script>
+<script src="./src/js/goBack.js"></script>
 <script src="./src/js/validateuser.js"></script>
 
 <?php
-echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 ?>
 <div class="editForm">

@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./src/css/lightbox.min.css">
     <script src="./src/js/lightbox-plus-jquery.min.js"></script>
     <script src="./src/js/accordion.js"></script>
+    <script src="./src/js/goBack.js"></script>
 </head>
 <body>
 <?php
@@ -103,7 +104,7 @@ if ($game["ERWEITERUNG"]) {
     $baseGame = $db->getAll("select * from brettspiele where ID=" . mysql_real_escape_string($game["ERWEITERUNG"]))[0];
     $extendsBaseGame = $db->getAll("select * from brettspiele where ERBT=" . mysql_real_escape_string($baseGame["ID"]));
 }
-echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 echo "
 <div class='gameName'>" . $game["NAME"];

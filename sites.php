@@ -15,8 +15,9 @@ foreach($shops as $shop){
 <meta charset="utf-8"/>
 <title>SHOPS</title>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
+<script src="./src/js/goBack.js"></script>
 <?php
-echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 ?>
 <div id="SiteDiv">

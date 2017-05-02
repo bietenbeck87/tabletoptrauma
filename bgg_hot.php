@@ -1,6 +1,7 @@
 <meta charset="utf-8"/>
 <title>HOTNESS LIST</title>
 <link rel="stylesheet" type="text/css" href="./src/css/style.css">
+<script src="./src/js/goBack.js"></script>
 <?php
 $s = curl_init();
 $url="https://www.boardgamegeek.com/xmlapi2/hot";
@@ -12,7 +13,7 @@ $xml = simplexml_load_string($xmlstring);
 $json = json_encode($xml);
 $array = json_decode($json,TRUE);
 $rowEvenOdd = "odd";
-echo "<a href='".$GLOBALS['_SERVER']['HTTP_REFERER']."'><div class='BackBtn leftBtn'>Zurück</div></a>";
+echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
 echo "<table class='hotlisttable'>";
 echo "<tr class='head'><td>RANK:</td><td>BILD:</td><td>Name</td><td>ERSCHEINUNGS-JAHR:</td></tr>";

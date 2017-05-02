@@ -155,9 +155,10 @@ if ($IDGame) {
 <?php
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 ?>
 <a href="http://www.boardgamegeek.com" target="_blank">
-    <button>Open BoardGameGeek</button>
+    <button>BoardGameGeek öffnen</button>
 </a>
 
 <div class="editForm">

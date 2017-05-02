@@ -37,13 +37,14 @@ if (isset($errorMessage)) {
 <?php
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 ?>
 <div id="loginBox">
     <form action="login.php" method="post">
-        EMAIL:<br>
+        E-MAIL:<br>
         <input type="text" size="40" maxlength="250" name="Name"><br><br>
 
-        Password:<br>
+        Passwort:<br>
         <input type="password" size="40" maxlength="250" name="Password"><br>
         <?php
         if (isset($_GET["group"]) && isset($_GET["ghash"])) {

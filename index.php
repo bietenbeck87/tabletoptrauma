@@ -100,25 +100,25 @@ else {
                 <?php
                 if (!isset($_COOKIE["loggedInBG"])) {
                     echo '<a href="login.php">
-        <div id="login" class="topBtn">Login</div>
+        <div id="login" class="topBtn">Einloggen</div>
     </a>';
                 }
                 if (isset($_COOKIE["loggedInBG"])) {
                     echo '<a href="addeditGame.php">
-        <div id="login" class="topBtn">Add Game</div>
+        <div id="login" class="topBtn"><span class="add">+</span>Spiel</div>
     </a>';
                 } ?>
                 <a href="sites.php">
-                    <div id="sites" class='topBtn'>Sites</div>
+                    <div id="sites" class='topBtn'>Seiten</div>
                 </a>
                 <div class='clear'></div>
                 <?php
                 if (!isset($_COOKIE["loggedInBG"])) {
-                    echo "<a href = 'addeditUser.php' ><div id = 'register' class='topBtn' >register</div></a>";
+                    echo "<a href = 'addeditUser.php' ><div id = 'register' class='topBtn' >Anmelden</div></a>";
                 }
                 if (isset($_COOKIE["loggedInBG"])) {
-                    echo "<a href ='addeditUser.php?ID=" . $_COOKIE["loggedInBG"] . "' ><div id = 'register' class='topBtn' >User Menu</div></a>";
-                    echo "<a href='addeditGroup.php'><div id='createGroup' class='topBtn'>create Group</div></a>";
+                    echo "<a href ='addeditUser.php?ID=" . $_COOKIE["loggedInBG"] . "' ><div id = 'register' class='topBtn' >Konto</div></a>";
+                    echo "<a href='addeditGroup.php'><div id='createGroup' class='topBtn'><span class='add'>+</span>Gruppe</div></a>";
                 }
                 ?>
                 <div class="clear"></div>
@@ -143,7 +143,7 @@ else {
     <form action="index.php" method="post">
 
         <?php if (isset($userGroups) && count($userGroups) >= 1) {
-            echo "<div class='filterGroups'><div class='formInputs'><Select name='groups'><option value='false'>Group</option>";
+            echo "<div class='filterGroups'><div class='formInputs'><Select name='groups'><option value='false'>Gruppe</option>";
             foreach ($userGroups as $userGroup) {
                 if (isset($_COOKIE["selectedGroup"]) && $_COOKIE["selectedGroup"] == $userGroup["ID"]) {
                     $sSelected = " selected='selected'";
@@ -154,7 +154,7 @@ else {
                 echo "<option" . $sSelected . " value='" . $userGroup["ID"] . "'>" . $userGroup["NAME"] . "</option>";
             }
             echo "</Select></div>";
-            echo "<div class='formBtn'><button type='submit' id='changeButton'>change Group</button></div>";
+            echo "<div class='formBtn'><button type='submit' id='changeButton'>Gruppe wechseln</button></div>";
             $selectedGroupInfo = $db->getAll("Select * from groups where ID='" . $_COOKIE["selectedGroup"] . "'");
             if (isset($_COOKIE["loggedInBG"]) && $_COOKIE["loggedInBG"] == $selectedGroupInfo[0]["GROUPADMIN"]) {
                 echo "<a href='addeditGroup.php?id=" . $_COOKIE["selectedGroup"] . "'><div class='formBtn'><button type='button' id='changeButton'>edit Group</button></div></a>";
@@ -167,14 +167,14 @@ else {
         <div class="filterGames">
 
             <div class="formBtn">
-                <button type="submit" id="searchButton">Search</button>
+                <button type="submit" id="searchButton">Suchen</button>
             </div>
             <div class="formInputs">
                 <input name="namesearch" type="text" <?php if (isset($_POST["namesearch"])) {
                     echo "value='" . $_POST["namesearch"] . "'";
                 } ?>>
                 <Select name="playerCount">
-                    <option value="false">Player</option>
+                    <option value="false">Spieler</option>
                     <option <?php if (isset($_POST["playerCount"]) && $_POST["playerCount"] == "1") {
                         echo "selected='selected'";
                     } ?>>1
@@ -225,7 +225,7 @@ else {
                     </option>
                 </Select>
                 <Select name="playTime">
-                    <option value="false">Time</option>
+                    <option value="false">Zeit</option>
                     <option value="30" <?php if (isset($_POST["playTime"]) && $_POST["playTime"] == "30") {
                         echo "selected='selected'";
                     } ?>>< 30min
@@ -252,7 +252,7 @@ else {
                     </option>
                 </Select>
                 <Select name="Koop">
-                    <option value="false">Coop</option>
+                    <option value="false">Koop</option>
                     <option value="0" <?php if (isset($_POST["Koop"]) && $_POST["Koop"] == "0") {
                         echo "selected='selected'";
                     } ?>>Nein
@@ -300,21 +300,21 @@ else {
                         if (isset($_POST["status"]) and $_POST["status"] == "mine") {
                             echo " selected='selected'";
                         }
-                        echo ">mine</option>";
+                        echo ">Eigene</option>";
                     }
                     echo "<option value='0'";
                     if (isset($_POST["status"]) and $_POST["status"] == "0") {
                         echo " selected='selected'";
                     }
-                    echo ">available</option><option value='1'";
+                    echo ">verfügbar</option><option value='1'";
                     if (isset($_POST["status"]) and $_POST["status"] == "1") {
                         echo " selected='selected'";
                     }
-                    echo ">ordered</option><option value='2'";
+                    echo ">bestellt</option><option value='2'";
                     if (isset($_POST["status"]) and $_POST["status"] == "2") {
                         echo " selected='selected'";
                     }
-                    echo ">wants</option>;
+                    echo ">wünsche</option>;
                     }
                 </Select>";
                 }
@@ -322,7 +322,7 @@ else {
 
                 //USERS
                 if (isset($_COOKIE["selectedGroup"])) {
-                    echo "<Select name='besitzer'><option value='false'>Owner</option>";
+                    echo "<Select name='besitzer'><option value='false'>Besitzer</option>";
 
                     foreach ($aGroupUser as $user) {
                         if (isset($_POST["besitzer"]) && $_POST["besitzer"] == $user["ID"]) {

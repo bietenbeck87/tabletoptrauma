@@ -27,11 +27,12 @@ if(isset($_POST["groupID"])){
 <?php
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 ?>
 <div class="editForm">
     <form name="addeditform" action="addeditGroup.php" method="post" onsubmit="return validateForm()">
-        <label>GroupName:</label><input type="text" name="name" <?php if(isset($group)){ echo "value='".$group[0]["NAME"]."'";} ?>>
-        <label>GroupPicture:</label><input type="text" name="picture" <?php if(isset($group)){ echo "value='".$group[0]["GROUPPIC"]."'";} ?>>
+        <label>Gruppen-Name:</label><input type="text" name="name" <?php if(isset($group)){ echo "value='".$group[0]["NAME"]."'";} ?>>
+        <label>Gruppen-Bild:</label><input type="text" name="picture" <?php if(isset($group)){ echo "value='".$group[0]["GROUPPIC"]."'";} ?>>
         <?php if(!isset($group)) {
             echo "<button type = 'submit' name = 'buttonChecked' > Gruppe Anlegen </button >";
          }else{

@@ -46,24 +46,25 @@ elseif (isset($_POST["name"])) {
 <?php
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 ?>
 <div class="editForm">
     <form name="addeditform" action="addeditUser.php" method="post" onsubmit="return validateForm()">
         <?php
         if (!isset($user)) {
-            echo '<label>Username:</label><input type="text" name="name" id="nameInput">';
+            echo '<label>Benutzername:</label><input type="text" name="name" id="nameInput">';
         } ?>
         <?php if (!isset($user)) {
-            echo '<label>Email:</label><input type="text" name="mail">';
+            echo '<label>E-mail:</label><input type="text" name="mail">';
         } ?>
         <?php if (!isset($user)) {
-            echo '<label>Password:</label><input type="password" name="password">';
+            echo '<label>Passwort:</label><input type="password" name="password">';
         }
         else {
-            echo '<label>new Password:</label><input type="password" name="newpassword">';
+            echo '<label>neues Passwort:</label><input type="password" name="newpassword">';
         }
         ?>
-        <label>Color:</label>#<input type="text" name="colorflag" id="colorInput" <?php if (isset($user)) {
+        <label>Farbe:</label>#<input type="text" name="colorflag" id="colorInput" <?php if (isset($user)) {
             echo "value='" . $user[0]["FLAGCOLOR"] . "'";
         } ?>>
         <div class="showflags">
@@ -92,16 +93,16 @@ echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
         </div>
         <div class="clear"></div>
         <?php if (isset($user)) {
-            echo '<label>Old Password:</label><input type="password" name="oldpassword">';
+            echo '<label>altes Passwort:</label><input type="password" name="oldpassword">';
         } ?>
         <?php if (isset($user)) {
             echo '<input type="hidden" name="id" value="' . $user[0]["ID"] . '">';
         } ?>
 
         <?php if (isset($user)) {
-            echo "<button type = 'submit' name = 'buttonChecked' > save User - Data </button >";
+            echo "<button type = 'submit' name = 'buttonChecked' > Speichern </button >";
         }else{
-            echo "<button type = 'submit' name = 'buttonChecked' >create User</button >";
+            echo "<button type = 'submit' name = 'buttonChecked' >Benutzer erstellen</button >";
         } ?>
     </form>
 </div>

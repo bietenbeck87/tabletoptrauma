@@ -19,6 +19,7 @@ if(isset($_FILES['datei'])){
 <?php
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 ?>
 <h2>File-Upload:</h2>
 <div id="uploadForm"><form action="fileupload.php" method="post" enctype="multipart/form-data">

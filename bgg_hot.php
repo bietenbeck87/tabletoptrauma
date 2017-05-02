@@ -15,6 +15,7 @@ $array = json_decode($json,TRUE);
 $rowEvenOdd = "odd";
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 echo "<table class='hotlisttable'>";
 echo "<tr class='head'><td>RANK:</td><td>BILD:</td><td>Name</td><td>ERSCHEINUNGS-JAHR:</td></tr>";
 foreach($array["item"] as $gameData){

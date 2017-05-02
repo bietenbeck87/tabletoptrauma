@@ -106,6 +106,7 @@ if ($game["ERWEITERUNG"]) {
 }
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 echo "
 <div class='gameName'>" . $game["NAME"];
 if ($ext) {
@@ -160,13 +161,13 @@ echo "</ul></div>
 if (isset($_COOKIE["loggedInBG"])) {
     $admin = $db->getOne("Select ADMIN from users where ID='" . $_COOKIE["loggedInBG"] . "'");
     if (($game["CREATEDBY"] == $_COOKIE["loggedInBG"]) || $admin == 1) {
-        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "'><button>Edit</button></a>";
+        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "'><button>Bearbeiten</button></a>";
     }
-    echo "<a href='fileupload.php?ID=" . $game["ID"] . "'><button>Add File</button></a>";
+    echo "<a href='fileupload.php?ID=" . $game["ID"] . "'><button class='btnAdd'>Datei</button></a>";
 }
 if (!$ext) {
     if (isset($_COOKIE["loggedInBG"])) {
-        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "&extension=true'><button>Add Extension</button></a>";
+        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "&extension=true'><button class='btnAdd'>Erweiterung</button></a>";
     }
 }
 echo "</div><div class='descriptionbox'>Beschreibung<div class='gamedescription'>" . str_replace(["\r"], "</br>", $game["DESCRIPTION"]) . "</div></div></div>";
@@ -175,20 +176,20 @@ if ($_COOKIE["loggedInBG"]) {
     echo "<div class='gameButtons'>";
     if (isset($user2Game[0])) {
         if ($user2Game[0]["STATUS"] == "1") {
-            echo "<div class='deactiveBtn'>ordered</div>";
+            echo "<div class='deactiveBtn'>bestellt</div>";
         }
         else {
-            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>ordered</div></a>";
+            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>bestellt</div></a>";
         }
 
         if ($user2Game[0]["STATUS"] == "0") {
-            echo "<div class='deactiveBtn'>arrived</div>";
+            echo "<div class='deactiveBtn'>verfügbar</div>";
         }
         else {
-            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>arrived</div></a>";
+            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>verfügbar</div></a>";
         }
         if ($user2Game[0]["STATUS"] == "0" || $user2Game[0]["STATUS"] == "1" || $user2Game[0]["STATUS"] == "2") {
-            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=delete'><div class='activeBtn'>remove</div></a>";
+            echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=delete'><div class='activeBtn'>entfernen</div></a>";
         }
     }
     else {

@@ -21,6 +21,7 @@ if (isset($_GET["delete"])) {
 }
 echo "<div class='BackBtn leftBtn' onclick='goBack();'>Zurück</div>";
 echo "<a href='index.php'><div class='BackBtn rightBtn'>Startseite</div></a>";
+echo "<div class='clear'></div>";
 if ((isset($_GET["id"]) && $_GET["id"] != "")) {
     $groupID = $_GET["id"];
     $selectedGroup = $db->getAll("Select * from groups where ID='" . mysql_real_escape_string($groupID). "'");

@@ -1,6 +1,14 @@
 <?php
 include_once("./core/dB.php");
 $db = new dB();
+if(isset($_GET["logout"]) && $_GET["logout"] == "true"){
+    setcookie("loggedInBG", "", time() - 3600);
+    setcookie("selectedGroup", "", time() - 3600);
+    header('Location: index.php');
+}
+
+
+
 if (isset($_POST['Name']) && $_POST['Password']) {
     $Name = $_POST['Name'];
     $Password = md5($_POST['Password']);

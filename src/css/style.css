@@ -387,11 +387,48 @@ a{
     height: 25px;
     text-align: center;
     width: 180px;
-    border-bottom-right-radius: 20px;
     color: #3f3f3f;
     margin-top:8px;
 }
 #register:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+#usermenu {
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: right;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    color: #3f3f3f;
+    margin-top:8px;
+    margin-right:8px;
+}
+#usermenu:hover{
+    background: #aaa none repeat scroll 0 0;
+    box-shadow: none;
+    border: 2px solid #888;
+}
+#logout {
+    background: #ccc none repeat scroll 0 0;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    border: 2px dashed #999;
+    float: right;
+    font-family: monospace;
+    font-size: 24px;
+    height: 25px;
+    text-align: center;
+    width: 180px;
+    border-bottom-right-radius: 20px;
+    color: #3f3f3f;
+    margin-top:8px;
+}
+#logout:hover{
     background: #aaa none repeat scroll 0 0;
     box-shadow: none;
     border: 2px solid #888;
@@ -701,6 +738,18 @@ form {
         border-radius: 0px;
     }
     #register{
+        margin: 0px;
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+    }
+    #usermenu{
+        margin: 0px;
+        float:none;
+        display: inline-block;
+        border-radius: 0px;
+    }
+    #logout{
         margin: 0px;
         float:none;
         display: inline-block;

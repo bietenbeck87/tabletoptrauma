@@ -117,7 +117,8 @@ else {
                     echo "<a href = 'addeditUser.php' ><div id = 'register' class='topBtn' >Anmelden</div></a>";
                 }
                 if (isset($_COOKIE["loggedInBG"])) {
-                    echo "<a href ='addeditUser.php?ID=" . $_COOKIE["loggedInBG"] . "' ><div id = 'register' class='topBtn' >Konto</div></a>";
+                    echo "<a href ='login.php?logout=true'><div id ='logout' class='topBtn' >Ausloggen</div></a>";
+                    echo "<a href ='addeditUser.php?ID=" . $_COOKIE["loggedInBG"] . "' ><div id='usermenu' class='topBtn' >Konto</div></a>";
                     echo "<a href='addeditGroup.php'><div id='createGroup' class='topBtn'><span class='add'>+</span>Gruppe</div></a>";
                 }
                 ?>

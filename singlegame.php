@@ -100,7 +100,7 @@ else {
 $extensions = $db->getAll($getExtensions);
 if ($game["ERWEITERUNG"]) {
     $ext = true;
-    $baseGame = $db->getAll("select * from brettspiele where ID=" . mysql_real_escape_string($game["ERWEITERUNG"])[0]);
+    $baseGame = $db->getAll("select * from brettspiele where ID=" . mysql_real_escape_string($game["ERWEITERUNG"]))[0];
     $extendsBaseGame = $db->getAll("select * from brettspiele where ERBT=" . mysql_real_escape_string($baseGame["ID"]));
 }
 echo "<a href='index.php'><div id='BackBtn'>Zurück</div></a>";

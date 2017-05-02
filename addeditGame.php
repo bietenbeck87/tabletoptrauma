@@ -40,7 +40,7 @@ if (isset($_GET["GameID"])) {
     }
 }
 if (isset($_COOKIE["loggedInBG"])) {
-    $LoggedInuser = $db->getAll("select * from users where ID=" . mysql_real_escape_string($_COOKIE["loggedInBG"])[0]);
+    $LoggedInuser = $db->getAll("select * from users where ID=" . mysql_real_escape_string($_COOKIE["loggedInBG"]))[0];
 }
 
 

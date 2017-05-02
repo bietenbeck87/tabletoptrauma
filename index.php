@@ -362,7 +362,7 @@ if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
     $add .= " and g2g.IDTAG ='" . mysql_real_escape_string($_POST["Genre"]) . "'";
 }
 if (isset($_POST["status"]) && $_POST["status"] != "false") {
-    if(!$_POST["status"] == "mine"){
+    if($_POST["status"] != "mine"){
         $add .= " and u2g.STATUS='" . mysql_real_escape_string($_POST["status"]) . "'";
     }
     $bStatus = true;

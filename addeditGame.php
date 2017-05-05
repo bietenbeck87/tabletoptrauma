@@ -119,7 +119,7 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
             }
             $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($LoggedInuser["ID"])."','".mysql_real_escape_string($bestellt)."')";
             $db->execute($sqlUser2Game);
-            $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["Name"] . " " . $aBestelltArray[$bestellt];
+            $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             $db->execute($newsSQL);
         }

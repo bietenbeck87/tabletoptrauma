@@ -163,11 +163,11 @@ if (isset($_COOKIE["loggedInBG"])) {
     if (($game["CREATEDBY"] == $_COOKIE["loggedInBG"]) || $admin == 1) {
         echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "'><button>Bearbeiten</button></a>";
     }
-    echo "<a href='fileupload.php?ID=" . $game["ID"] . "'><button class='btnAdd'>Datei</button></a>";
+    echo "<a href='fileupload.php?ID=" . $game["ID"] . "'><button><span class='add'>+</span>Datei</button></a>";
 }
 if (!$ext) {
     if (isset($_COOKIE["loggedInBG"])) {
-        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "&extension=true'><button class='btnAdd'>Erweiterung</button></a>";
+        echo "<a href='addeditGame.php?GameID=" . $game["ID"] . "&extension=true'><button><span class='add'>+</span>Erweiterung</button></a>";
     }
 }
 echo "</div><div class='descriptionbox'>Beschreibung<div class='gamedescription'>" . str_replace(["\r"], "</br>", $game["DESCRIPTION"]) . "</div></div></div>";

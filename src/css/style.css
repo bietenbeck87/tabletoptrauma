@@ -717,16 +717,17 @@ form {
 }
 .add {
     color: green;
-    font-size: 24px;
+    font-size: 37px;
     font-weight: bolder;
-    margin-right: 5px;
+    float: left;
+    margin: -4px 0 0 5px;
 }
-.data button.btnAdd:before {
-    content: '+';
-    color:green;
+.data .add {
+    color: green;
+    font-size: 14px;
     font-weight: bolder;
-    font-size: 15px;
-    margin-right: 5px;
+    float: left;
+    margin: -3px 0 0 -4px;
 }
 
 

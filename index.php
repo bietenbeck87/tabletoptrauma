@@ -57,10 +57,10 @@ if (isset($_COOKIE["loggedInBG"])) {
 
 if (isset($_COOKIE["loggedInBG"])) {
     if (isset($_COOKIE["selectedGroup"])) {
-        $getNews = "Select n.* from news as n join user2group as u2gr on n.USERID =u2gr.IDUSER where u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' order by n.ID desc limit 10";
+        $getNews = "Select n.* from news as n join user2group as u2gr on n.USERID =u2gr.IDUSER where n.ACTIVE=1 and u2gr.IDGROUP='" . $_COOKIE["selectedGroup"] . "' order by n.ID desc limit 10";
     }
     else {
-        $getNews = "select * from news where USERID='" . $_COOKIE["loggedInBG"] . "' order by ID desc limit 10";
+        $getNews = "select * from news where ACTIVE=1 and USERID='" . $_COOKIE["loggedInBG"] . "' order by ID desc limit 10";
     }
     $News = $db->getAll($getNews);
 }

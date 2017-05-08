@@ -39,7 +39,7 @@ if ((isset($_GET["id"]) && $_GET["id"] != "")) {
         <label>WER:</label><input name='who' type='text'>
         <label>WAS:</label><select multiple='multiple' name='games[]'>";
             foreach ($GameList as $game) {
-                echo "<option value='" . $game["NAME"] . "'>" . $game["NAME"] . "</option>";
+                echo "<option value='" . htmlentities($game['NAME'], ENT_QUOTES, "UTF-8") . "'>" . htmlentities($game['NAME'], ENT_QUOTES, "UTF-8") . "</option>";
             }
             echo "</select></br>";
         if(isset($_GET["id"])){

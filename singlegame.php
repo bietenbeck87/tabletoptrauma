@@ -67,11 +67,13 @@ if (isset($_GET["status"]) && $_COOKIE["loggedInBG"]) {
             $db->execute("Update user2game set STATUS='" . mysql_real_escape_string($_GET["status"]) . "' where id='" . mysql_real_escape_string($user2Game[0]["ID"]) . "'");
             if ($game["ERWEITERUNG"]) {
                 $message = "Die Erweiterung \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
+                $db->execute("Update news set ACTIVE=0 where GAMEID='".$game["ID"]."' and USERID='".$loggedInUser[0]["ID"]."'");
                 $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
                 $db->execute($newsSQL);
             }
             else {
                 $message = "Das Spiel \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
+                $db->execute("Update news set ACTIVE=0 where GAMEID='".$game["ID"]."' and USERID='".$loggedInUser[0]["ID"]."'");
                 $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
                 $db->execute($newsSQL);
             }
@@ -81,11 +83,13 @@ if (isset($_GET["status"]) && $_COOKIE["loggedInBG"]) {
         $db->execute("Insert into user2game (IDGAME,IDUSER,STATUS) value ('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($_GET["status"]) . "')");
         if ($game["ERWEITERUNG"]) {
             $message = "Die Erweiterung \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
+            $db->execute("Update news set ACTIVE=0 where GAMEID='".$game["ID"]."' and USERID='".$loggedInUser[0]["ID"]."'");
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
             $db->execute($newsSQL);
         }
         else {
             $message = "Das Spiel \"" . $game["NAME"] . "\" von " . $loggedInUser[0]["NAME"] . " " . $aBestelltArray[$_GET["status"]];
+            $db->execute("Update news set ACTIVE=0 where GAMEID='".$game["ID"]."' and USERID='".$loggedInUser[0]["ID"]."'");
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($game["ID"]) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($loggedInUser[0]["ID"]) . "')";
             $db->execute($newsSQL);
         }

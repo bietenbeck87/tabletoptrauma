@@ -10,7 +10,7 @@ if(isset($_POST["groupID"])){
     header('Location: index.php');
 }else {
     if (isset($_POST["name"]) && isset($_COOKIE["loggedInBG"])) {
-        $db->execute("insert into groups (NAME,GROUPADMIN,GROUPPIC) value ('" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($_POST["picture"]) . "',)");
+        $db->execute("insert into groups (NAME,GROUPADMIN,GROUPPIC) value ('" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($_POST["picture"]) . "')");
         $createdGroup = $db->getAll("select * from groups where NAME='" . mysql_real_escape_string($_POST["name"]) . "' and GROUPADMIN='" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "' order by ID desc limit 1");
         $db->execute("insert into user2group (IDUSER,IDGROUP) value ('" . mysql_real_escape_string($_COOKIE["loggedInBG"]) . "','" . mysql_real_escape_string($createdGroup[0]["ID"]) . "')");
         header('Location: index.php');

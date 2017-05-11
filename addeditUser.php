@@ -51,7 +51,6 @@ elseif (isset($_POST["name"])) {
         $db->execute("insert into users (NAME,EMAIL,PW,FLAGCOLOR,GETNEWS) value ('" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["mail"]) . "','" . md5($_POST["password"]) . "','" . mysql_real_escape_string($_POST["colorflag"]) . "','".$news."')");
         $user = $db->getAll("select * from users where EMAIL='" . mysql_real_escape_string($_POST["mail"]) . "'");
         //Mail an den Admin
-        /*
         $empfaenger = 'bietenbeck87@gmail.com';
         $betreff = 'Neuer User';
         $nachricht = 'Ein Neuer user wurde angelegt. Email:'.$_POST["mail"].'  Name:'.$_POST["name"];
@@ -61,12 +60,11 @@ elseif (isset($_POST["name"])) {
             'Content-type:text/html; charset=utf-8' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
         mail($empfaenger, $betreff, $nachricht, $header);
-        */
 
         //Mail an den User
         $empfaenger2 = $_POST["mail"];
         $betreff2 = 'Regestrierungs-Bestätigung';
-        $nachricht2 = '<html><body>Bitte bestätigen sie Ihre Registrierung:<br><a href="dev.ttt/addedituser.php?activate='.$_POST["mail"].'&idhash='.md5($user[0]["ID"]).'">LINK</a></body></html>';
+        $nachricht2 = '<html><body>Bitte bestätigen sie Ihre Registrierung:<br><a href="pubgaming.de/addedituser.php?activate='.$_POST["mail"].'&idhash='.md5($user[0]["ID"]).'">LINK</a></body></html>';
         $header2 = 'From: noreply@pubgaming.de' . "\r\n" .
             'Reply-To: noreply@pubgaming.de' . "\r\n" .
             'MIME-Version: 1.0' . "\r\n" .

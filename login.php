@@ -12,7 +12,7 @@ if(isset($_GET["logout"]) && $_GET["logout"] == "true"){
 if (isset($_POST['Name']) && $_POST['Password']) {
     $Name = $_POST['Name'];
     $Password = md5($_POST['Password']);
-    $statement = "SELECT ID FROM users WHERE EMAIL = '" . mysql_real_escape_string($Name) . "' and PW='" .$Password. "'";
+    $statement = "SELECT ID FROM users WHERE EMAIL = '" . mysql_real_escape_string($Name) . "' and PW='" .$Password. "' AND ACTIVE='1'";
     $ID = $db->getOne($statement);
     if ($ID) {
         if ($_POST["groupid"]) {

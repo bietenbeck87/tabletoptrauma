@@ -19,7 +19,7 @@ echo "<div class='clear'></div>";
 echo "<table class='hotlisttable'>";
 echo "<tr class='head'><td>RANK:</td><td>BILD:</td><td>Name</td><td>ERSCHEINUNGS-JAHR:</td></tr>";
 foreach($array["item"] as $gameData){
-echo "<tr class='".$rowEvenOdd."'><td>".$gameData['@attributes']['rank']."</td><td><img src='".$gameData['thumbnail']['@attributes']['value']."'></td><td>".$gameData['name']['@attributes']['value']."</td><td>".$gameData['yearpublished']['@attributes']['value']."</td></tr>";
+echo "<tr class='".$rowEvenOdd."'><td>".$gameData['@attributes']['rank']."</td><td><a href='https://boardgamegeek.com/boardgame/".$gameData['@attributes']['id']."/' target='_blank'><img src='".$gameData['thumbnail']['@attributes']['value']."'></a></td><td>".$gameData['name']['@attributes']['value']."</td><td>".$gameData['yearpublished']['@attributes']['value']."</td></tr>";
     if ($rowEvenOdd == "odd") {
         $rowEvenOdd = "even";
     }

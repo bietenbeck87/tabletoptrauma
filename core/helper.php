@@ -121,6 +121,15 @@ class helper
         }
     }
 
+    public function SendMail($email,$nachricht,$betreff){
+        $empfaenger = $email;
+        $header = 'From: noreply@pubgaming.de' . "\r\n" .
+            'Reply-To: noreply@pubgaming.de' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+
+        mail($empfaenger, $betreff, $nachricht, $header);
+    }
+
     public function getUsersFromGroups($db,$userID){
         $sSQL="SELECT distinct  u2.NAME, u2.ID
         FROM      users u

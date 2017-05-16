@@ -30,6 +30,12 @@ if (isset($_COOKIE["loggedInBG"])) {
             foreach ($_POST["who"] as $userID) {
                 $SQLINSERTU2D = "Insert into user2date (IDDATE,IDUSER,STATE) value ('" . $ID . "','" . $userID . "','0')";
                 $db->execute($SQLINSERTU2D);
+                $sSQLgetUser = "Select * from users where ID ='$userID'";
+                $user = $db->getAll($sSQLgetUser)[0];
+                if($user["GETNEWS"] == 1){
+                  $sMSG="Sie wurden zu einem neuen Termin eingeladen am ".$_POST["date"]." um ".$_POST["time"]." Uhr bei ".$_POST["place"];
+                  $helper->SendMail($user["EMAIL"],$sMSG,"Neuer Termin");
+                }
             }
         }
     }
@@ -45,7 +51,7 @@ if (isset($_COOKIE["loggedInBG"])) {
     $GameListSQL = "Select * from brettspiele where ERWEITERUNG is Null order by Name";
     $GameList = $db->getAll($GameListSQL);
     $userList = $helper->getUsersFromGroups($db, $_COOKIE["loggedInBG"]);
-    $dates = $db->getAll("Select distinct t.* from termine as t join user2date as u on t.ID=u.IDDATE where u.IDUSER=" . $_COOKIE["loggedInBG"] . " order by t.DATE, t.TIME");
+    $dates = $db->getAll("Select distinct t.* from termine as t join user2date as u on t.ID=u.IDDATE where u.IDUSER=" . $_COOKIE["loggedInBG"] . " order by t.DATE, t.TIME desc");
 
 
     echo "<div id='terminForm'>

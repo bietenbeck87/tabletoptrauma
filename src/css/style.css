@@ -528,6 +528,11 @@ a{
     float: right;
     height: 26px;
 }
+.newDate {
+    color: red;
+    float: left;
+    margin-top: 5px;
+}
 
 .gameButtons div{
     background: #ccc none repeat scroll 0 0;

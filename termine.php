@@ -72,6 +72,8 @@ if (isset($_COOKIE["loggedInBG"])) {
 </div>";
     echo "<div class='aditionalData dateContainer'>";
     foreach ($dates as $date) {
+        $sSQLurState = "Select STATE from user2date where IDDATE='" . $date["ID"] . "' and IDUSER='".$_COOKIE["loggedInBG"]."'";
+        $urState = $db->getOne($sSQLurState);
         $sSQLUser = "Select * from user2date where IDDATE='" . $date["ID"] . "'";
         $user2dates = $db->getAll($sSQLUser);
         $games = "<ul class='gameList'>";
@@ -80,7 +82,11 @@ if (isset($_COOKIE["loggedInBG"])) {
         }
         $games .= "</ul>";
 
-        echo "<h2 class='accord'>" . $date["DATE"] . " - " . $date["TIME"] . " <a href='termine.php?delete='" . $date["ID"] . ">";
+        echo "<h2 class='accord'>";
+        if($urState == 0 ){
+          echo "<span class='newDate'>*NEW*</span>";
+        }
+        echo$date["DATE"] . " - " . $date["TIME"] . " <a href='termine.php?delete='" . $date["ID"] . ">";
         if ($date["IDUSER"] == $_COOKIE["loggedInBG"]) {
             echo "<button class='deleteButton'>löschen</button ></a>";
         }

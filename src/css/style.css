@@ -509,6 +509,26 @@ a{
     box-shadow: none;
     border: 2px solid #888;
 }
+#dateBtn.activeDates {
+    border: 2px solid red;
+}
+.dateCount {
+    position: relative;
+    float: left;
+    height: 20px;
+    width: 20px;
+    border: 1px solid black;
+    text-align: center;
+    border-radius: 12px;
+    background: white;
+    margin-left: -10px;
+    margin-top: -8px;
+}
+.dateContainer button {
+    float: right;
+    height: 26px;
+}
+
 .gameButtons div{
     background: #ccc none repeat scroll 0 0;
     box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
@@ -555,6 +575,25 @@ a{
     text-align: center;
     margin-top: 0;
     text-decoration: underline;
+}
+.gameList li {
+    margin: 0 0 0 25px;
+    font-weight: bolder;
+    list-style-type: disc;
+}
+.fat {
+    font-weight: bolder;
+}
+.dateContainer .deleteButton {
+    float: none;
+    height: 30px;
+    margin-left: 25px;
+}
+.userState {
+    margin: 2px;
+    border-radius: 15px;
+    padding: 2px 20px;
+    font-weight: bolder;
 }
 .active{
     height: 30px;

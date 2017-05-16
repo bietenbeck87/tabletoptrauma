@@ -99,7 +99,7 @@ class helper
 
     public function sendMail2People($db,$userID,$nachricht,$betreff)
     {
-        $sSQL="SELECT distinct   u2.EMAIL
+        $sSQL="SELECT distinct  u2.EMAIL
         FROM      users u
         JOIN      user2group ug ON (ug.IDUSER = u.ID)
         JOIN      user2group ug2 ON (ug2.IDGROUP = ug.IDGROUP)
@@ -119,6 +119,19 @@ class helper
 
             mail($empfaenger, $betreff, $nachricht, $header);
         }
+    }
+
+    public function getUsersFromGroups($db,$userID){
+        $sSQL="SELECT distinct  u2.NAME, u2.ID
+        FROM      users u
+        JOIN      user2group ug ON (ug.IDUSER = u.ID)
+        JOIN      user2group ug2 ON (ug2.IDGROUP = ug.IDGROUP)
+        JOIN      users u2 ON (u2.ID = ug2.IDUSER and u.ID != u2.ID)
+        WHERE     u.id = '".$userID."'";
+
+        $data  =$db->getAll($sSQL);
+
+        return $data;
     }
 
 }

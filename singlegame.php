@@ -201,7 +201,7 @@ if ($_COOKIE["loggedInBG"]) {
         }
     }
     else {
-        echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>ordered</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>arrived</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=2'><div class='activeBtn'>Want</div></a>";
+        echo "<a href='singlegame.php?id=" . $game["ID"] . "&status=1'><div class='activeBtn'>bestellt</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=0'><div class='activeBtn'>verfügbar</div></a><a href='singlegame.php?id=" . $game["ID"] . "&status=2'><div class='activeBtn'>Want</div></a>";
     }
     echo "</div>";
 }

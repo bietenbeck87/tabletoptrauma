@@ -39,14 +39,20 @@ $aFlagDesc = array(0 => "available", 1 => "ordered", 2 => "wanted");
 $getTags = "select * from tags";
 $aTags = $db->getAll($getTags);
 
-$getTags2Game="Select b.ID,t.TAG from brettspiele as b left join game2tag as g2g on b.ID=g2g.IDGAME join tags as t on g2g.IDTAG=t.ID";
+$getTags2Game = "Select b.ID,t.TAG from brettspiele as b left join game2tag as g2g on b.ID=g2g.IDGAME join tags as t on g2g.IDTAG=t.ID";
 $gameTags = $db->getAll($getTags2Game);
 $aGameTags = array();
-foreach($gameTags as $gameTag){
+foreach ($gameTags as $gameTag) {
     $aGameTags[$gameTag["ID"]][] = $gameTag["TAG"];
 }
 
 if (isset($_COOKIE["loggedInBG"])) {
+    $dateSelect = $db->getAll("Select * from user2date where IDUSER='" . $_COOKIE["loggedInBG"] . "' and STATE='0'");
+    $dateCount = 0;
+    if (count($dateSelect) >= 1) {
+        $dateCount = count($dateSelect) >= 1;
+    }
+
     $getUserGroups = "Select g.* from groups as g join user2group as u2gr on g.ID=u2gr.IDGROUP where u2gr.IDUSER='" . $_COOKIE["loggedInBG"] . "'";
     $userGroups = $db->getAll($getUserGroups);
     if (isset($_COOKIE["selectedGroup"])) {
@@ -93,8 +99,16 @@ else {
                 <a href="bgg_hot.php">
                     <div id="hot" class="topBtn">BGG-HOTLIST</div>
                 </a>
-                <?php if (isset($_COOKIE["loggedInBG"]) && isset($_COOKIE["selectedGroup"])) {
-                    echo "<a href='termine.php?id=" . $_COOKIE["selectedGroup"] . "'><div id='dateBtn' class='topBtn'>Termine</div></a>";
+                <?php if (isset($_COOKIE["loggedInBG"])) {
+                    echo "<a href='termine.php'><div id='dateBtn' class='topBtn";
+                    if ($dateCount != 0) {
+                        echo " activeDates";
+                    }
+                    echo "'>Termine";
+                    if ($dateCount != 0) {
+                        echo " <div class='dateCount'>".$dateCount."</div>";
+                    }
+                    echo "</div></a>";
                 }
                 ?>
                 <?php
@@ -285,7 +299,7 @@ else {
                         else {
                             $sSelected = "";
                         }
-                        echo "<option value='".$tag["ID"]."' " . $sSelected . ">" . $tag["TAG"] . "</option>";
+                        echo "<option value='" . $tag["ID"] . "' " . $sSelected . ">" . $tag["TAG"] . "</option>";
                     }
                     ?>
                 </Select>
@@ -348,7 +362,7 @@ $aKoop = array(0 => "Nein",
     4 => "Teams");
 $add = "";
 if (isset($_POST["namesearch"]) && $_POST["namesearch"] != "") {
-    $add = " and b.NAME like '%" .mysql_real_escape_string(trim($_POST["namesearch"])) . "%'";
+    $add = " and b.NAME like '%" . mysql_real_escape_string(trim($_POST["namesearch"])) . "%'";
 }
 if (isset($_POST["playerCount"]) && $_POST["playerCount"] != "false") {
     $add .= " and b.MIN_P <=" . mysql_real_escape_string($_POST["playerCount"]) . " and b.MAX_P >=" . mysql_real_escape_string($_POST["playerCount"]);
@@ -363,7 +377,7 @@ if (isset($_POST["Genre"]) && $_POST["Genre"] != "false") {
     $add .= " and g2g.IDTAG ='" . mysql_real_escape_string($_POST["Genre"]) . "'";
 }
 if (isset($_POST["status"]) && $_POST["status"] != "false") {
-    if($_POST["status"] != "mine"){
+    if ($_POST["status"] != "mine") {
         $add .= " and u2g.STATUS='" . mysql_real_escape_string($_POST["status"]) . "'";
     }
     $bStatus = true;
@@ -409,10 +423,11 @@ echo "<div id='gameTableDiv'><table><tr id='head'><td>Bild</td><td>Name</td><td>
 
 $rowEvenOdd = "odd";
 foreach ($games as $game) {
-    if(!file_exists("./uploads/".$game["ID"]."/thumb/thumb.jpg")){
-        $mainIMG =$helper->grab_image($game["BILD"],"./uploads/".$game["ID"]."/thumb");
-    }else{
-        $mainIMG= "./uploads/".$game["ID"]."/thumb/thumb.jpg";
+    if (!file_exists("./uploads/" . $game["ID"] . "/thumb/thumb.jpg")) {
+        $mainIMG = $helper->grab_image($game["BILD"], "./uploads/" . $game["ID"] . "/thumb");
+    }
+    else {
+        $mainIMG = "./uploads/" . $game["ID"] . "/thumb/thumb.jpg";
     }
 
 
@@ -426,10 +441,11 @@ foreach ($games as $game) {
     else {
         $aBesitzer = array();
     }
-    if(isset($aGameTags[$game["ID"]])) {
+    if (isset($aGameTags[$game["ID"]])) {
         $tags = implode("<br>", $aGameTags[$game["ID"]]);
-    }else{
-        $tags="";
+    }
+    else {
+        $tags = "";
     }
     $banner = "";
     foreach ($aBesitzer as $ubannerName) {

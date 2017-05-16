@@ -92,9 +92,9 @@ if (isset($_COOKIE["loggedInBG"])) {
         if($urState == 0 ){
           echo "<span class='newDate'>*NEW*</span>";
         }
-        echo$date["DATE"] . " - " . $date["TIME"] . " <a href='termine.php?delete='" . $date["ID"] . ">";
+        echo$date["DATE"] . " - " . $date["TIME"];
         if ($date["IDUSER"] == $_COOKIE["loggedInBG"]) {
-            echo "<button class='deleteButton'>löschen</button ></a>";
+            echo "<a href='termine.php?delete=" . $date["ID"] . "'><button class='deleteButton'>löschen</button ></a>";
         }
         echo "</h2><div class='extensions accElement'>
     Ort: <span class='fat'>" . $date["PLACE"] . "</span><br> Spiele: " . $games . "

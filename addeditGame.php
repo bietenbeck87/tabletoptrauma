@@ -243,7 +243,7 @@ echo "<div class='clear'></div>";
         </fieldset>
         </br>
         <?php
-        if (!isset($_GET["GameID"])) {
+        if (!isset($_GET["GameID"]) || (isset($_GET["GameID"]) && $ext==true)) {
         echo"<fieldset>
             <label>steht zur Verfügung:</label><input type='radio' name='status' value='0' ";
             if ($game["BESTELLT"] == 0) {

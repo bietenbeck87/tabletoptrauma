@@ -310,7 +310,7 @@ if (!$ext) {
         preg_match("/(.*\/watch\?v=)(.*)/", $game["YOUTUBE"], $output_array);
         if ($output_array[2]) {
             echo "<h2 class='accord'>Video</h2><div class='youtube accElement'><div id='youtube'>";
-            echo '<iframe id="ytplayer" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/' . $output_array[2] . '" frameborder="0"/>';
+            echo '<iframe id="ytplayer" type="text/html" width="640" height="360" src="http://www.youtube.com/embed/' . $output_array[2] . '" frameborder="0"></iframe>';
             echo "</div></div>";
         }
     }
@@ -447,5 +447,7 @@ else {
         echo "</div>";
     }
 }
+
+
 
 echo "</div></body></html>";

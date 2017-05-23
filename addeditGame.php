@@ -9,10 +9,10 @@ $aBestelltArray = array(0 => "ist angekommen", 1 => "wurde bestellt", 2 => "wurd
 $getTags = "select * from tags";
 $aTags = $db->getAll($getTags);
 
-$getTags2Game="Select b.ID,t.TAG from brettspiele as b left join game2tag as g2g on b.ID=g2g.IDGAME join tags as t on g2g.IDTAG=t.ID";
+$getTags2Game = "Select b.ID,t.TAG from brettspiele as b left join game2tag as g2g on b.ID=g2g.IDGAME join tags as t on g2g.IDTAG=t.ID";
 $gameTags = $db->getAll($getTags2Game);
 $aGameTags = array();
-foreach($gameTags as $gameTag){
+foreach ($gameTags as $gameTag) {
     $aGameTags[$gameTag["ID"]][] = $gameTag["TAG"];
 }
 
@@ -25,10 +25,10 @@ if (isset($_GET["GameID"])) {
     $extendsID = " and ID!=$gameID";
     $gameSQL = "select * from brettspiele where ID =" . mysql_real_escape_string($gameID);
     $game = $db->getAll($gameSQL)[0];
-    $statusID = $game["BESTELLT"];
-    if(isset($aGameTags[$game["ID"]])) {
+    if (isset($aGameTags[$game["ID"]])) {
         $genre = $aGameTags[$game["ID"]];
-    }else {
+    }
+    else {
         $genre = array();
     }
     $ExtList = explode("||", $game['ERBT']);
@@ -56,7 +56,7 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
         $extensionList = "";
     }
     if (!isset($_POST["status"])) {
-        $bestellt = 0;
+        $bestellt = "false";
     }
     else {
         $bestellt = $_POST["status"];
@@ -80,10 +80,10 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
                 }
             }
         }
-        $oldGameSQL = "Select * from brettspiele where ID='".$IDGame."'";
+        $oldGameSQL = "Select * from brettspiele where ID='" . $IDGame . "'";
         $oldGame = $db->getAll($oldGameSQL)[0];
-        if($oldGame["BILD"] != $_POST["img"]){
-            if(file_exists("./uploads/".$IDGame."/thumb/thumb.jpg")) {
+        if ($oldGame["BILD"] != $_POST["img"]) {
+            if (file_exists("./uploads/" . $IDGame . "/thumb/thumb.jpg")) {
                 unlink("./uploads/" . $IDGame . "/thumb/thumb.jpg");
             }
         }
@@ -92,9 +92,9 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
 
         if (isset($_POST['genre'])) {
             $aTags = $_POST['genre'];
-            $db->execute("delete from game2tag where IDGAME='".mysql_real_escape_string($IDGame)."'");
+            $db->execute("delete from game2tag where IDGAME='" . mysql_real_escape_string($IDGame) . "'");
             foreach ($aTags as $tag) {
-              $insertTag = "Insert into game2tag(IDGAME,IDTAG) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($tag)."')";
+                $insertTag = "Insert into game2tag(IDGAME,IDTAG) value ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($tag) . "')";
                 $db->execute($insertTag);
             }
         }
@@ -102,45 +102,49 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
     else {
         if (isset($_POST["GameIDExt"])) {
 
-            $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG='" . mysql_real_escape_string($_POST["GameIDExt"]). "'");
+            $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG='" . mysql_real_escape_string($_POST["GameIDExt"]) . "'");
             if ($highestID) {
                 $IDGame = $highestID + 1;
             }
             else {
                 $IDGame = $_POST["GameIDExt"] + 1;
             }
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame). "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["GameIDExt"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','','".mysql_real_escape_string($LoggedInuser["ID"])."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,ERWEITERUNG,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["GameIDExt"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','','" . mysql_real_escape_string($LoggedInuser["ID"]) . "')";
             if (isset($_POST['genre'])) {
                 $aTags = $_POST['genre'];
                 foreach ($aTags as $tag) {
-                  $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('".$IDGame."','".$tag."')";
+                    $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('" . $IDGame . "','" . $tag . "')";
                     $db->execute($insertTag);
                 }
             }
-            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($LoggedInuser["ID"])."','".mysql_real_escape_string($bestellt)."')";
-            $db->execute($sqlUser2Game);
-            $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
-            $db->execute($newsSQL);
-            $helper->sendMail2People($db,$_COOKIE["loggedInBG"],$message,"Erweiterung ". $aBestelltArray[$bestellt]);
+            if ($bestellt != "false") {
+                $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($LoggedInuser["ID"]) . "','" . mysql_real_escape_string($bestellt) . "')";
+                $db->execute($sqlUser2Game);
+                $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
+                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($LoggedInuser["ID"]) . "')";
+                $db->execute($newsSQL);
+                $helper->sendMail2People($db, $_COOKIE["loggedInBG"], $message, "Erweiterung " . $aBestelltArray[$bestellt]);
+            }
         }
         else {
             $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG is NULL");
             $IDGame = $highestID + 100;
-            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','" . mysql_real_escape_string($extensionList) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
+            $sqlAddEdit = "insert into brettspiele (ID,NAME,DESCRIPTION,MIN_P,MAX_P,MIN_T,MAX_T,URL,BILD,YOUTUBE,KOOP,ERBT,CREATEDBY) values ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($_POST["name"]) . "','" . mysql_real_escape_string($_POST["description"]) . "','" . mysql_real_escape_string($_POST["min_p"]) . "','" . mysql_real_escape_string($_POST["max_p"]) . "','" . mysql_real_escape_string($_POST["min_t"]) . "','" . mysql_real_escape_string($_POST["max_t"]) . "','" . mysql_real_escape_string($_POST["url"]) . "','" . mysql_real_escape_string($_POST["img"]) . "','" . mysql_real_escape_string($_POST["yt"]) . "','" . mysql_real_escape_string($_POST["koop"]) . "','" . mysql_real_escape_string($extensionList) . "','" . mysql_real_escape_string($LoggedInuser["ID"]) . "')";
             if (isset($_POST['genre'])) {
                 $aTags = $_POST['genre'];
                 foreach ($aTags as $tag) {
-                  $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($tag)."')";
+                    $insertTag = "Insert into game2tag (IDGAME,IDTAG) value ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($tag) . "')";
                     $db->execute($insertTag);
                 }
             }
-            $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('".mysql_real_escape_string($IDGame)."','".mysql_real_escape_string($LoggedInuser["ID"])."','".mysql_real_escape_string($bestellt)."')";
-            $db->execute($sqlUser2Game);
-            $message = "Das Spiel \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
-            $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
-            $db->execute($newsSQL);
-            $helper->sendMail2People($db,$_COOKIE["loggedInBG"],$message,"Spiel ". $aBestelltArray[$bestellt]);
+            if ($bestellt != "false") {
+                $sqlUser2Game = "insert into user2game (IDGAME,IDUSER,STATUS) value ('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($LoggedInuser["ID"]) . "','" . mysql_real_escape_string($bestellt) . "')";
+                $db->execute($sqlUser2Game);
+                $message = "Das Spiel \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
+                $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','" . mysql_real_escape_string($LoggedInuser["ID"]) . "')";
+                $db->execute($newsSQL);
+                $helper->sendMail2People($db, $_COOKIE["loggedInBG"], $message, "Spiel " . $aBestelltArray[$bestellt]);
+            }
 
         }
     }
@@ -173,10 +177,9 @@ echo "<div class='clear'></div>";
             elseif ($ext) {
                 echo "<input type='hidden' name='GameIDExt' value='" . $gameID . "'>";
             }
-            echo "<input type='hidden' name='StatusID' value='" . $statusID . "'>";
             ?>
             <label>*Spiel-Name:</label><input type="text" name="name" <?php if ($b) {
-                echo "value='" . htmlentities($game['NAME'], ENT_QUOTES, "UTF-8"). "'";
+                echo "value='" . htmlentities($game['NAME'], ENT_QUOTES, "UTF-8") . "'";
             } ?>>
             <label>*Min. Spielerzahl:</label><input type="text" name="min_p" <?php if ($b || $ext) {
                 echo "value='" . $game['MIN_P'] . "'";
@@ -236,29 +239,20 @@ echo "<div class='clear'></div>";
                     else {
                         $sSelected = "";
                     }
-                    echo "<option value='".$tag["ID"]."' " . $sSelected . ">" . $tag["TAG"] . "</option>";
+                    echo "<option value='" . $tag["ID"] . "' " . $sSelected . ">" . $tag["TAG"] . "</option>";
                 }
                 ?>
             </select>
         </fieldset>
         </br>
         <?php
-        if (!isset($_GET["GameID"]) || (isset($_GET["GameID"]) && $ext==true)) {
-        echo"<fieldset>
-            <label>steht zur Verfügung:</label><input type='radio' name='status' value='0' ";
-            if ($game["BESTELLT"] == 0) {
-                echo "checked";
-            }
-            echo"><label>ist bestellt:</label><input type='radio' name='status' value='1' ";
-            if ($game["BESTELLT"] == 1) {
-                echo "checked";
-            }
-            echo "><label>auf Wantliste:</label><input type='radio' name='status' value='2' ";
-            if ($game["BESTELLT"] == 2) {
-                echo "checked";
-            }
-            echo "></fieldset>";
-        }?>
+        if (!isset($_GET["GameID"]) || (isset($_GET["GameID"]) && $ext == true)) {
+            echo "<fieldset>
+            <label>Nur hinzufügen:</label><input type='radio' name='status' value='false' checked='checked'>
+            <label>steht zur Verfügung:</label><input type='radio' name='status' value='0'>
+            <label>ist bestellt:</label><input type='radio' name='status' value='1'>
+            <label>auf Wantliste:</label><input type='radio' name='status' value='2'></fieldset>";
+        } ?>
         </br>
         <?php
         if (!$ext) {

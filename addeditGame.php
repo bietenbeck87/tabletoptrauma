@@ -122,7 +122,7 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
             $message = "Die Erweiterung \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             $db->execute($newsSQL);
-            $helper->sendMail2People($db,$loggedInUser[0]["ID"],$message,"Erweiterung ". $aBestelltArray[$bestellt]);
+            $helper->sendMail2People($db,$_COOKIE["loggedInBG"],$message,"Erweiterung ". $aBestelltArray[$bestellt]);
         }
         else {
             $highestID = $db->getOne("select max(ID) from brettspiele where ERWEITERUNG is NULL");
@@ -140,7 +140,7 @@ if (isset($_POST["name"]) && $_POST["name"] != "" && isset($_POST["min_p"]) && $
             $message = "Das Spiel \"" . $_POST["name"] . "\" von " . $LoggedInuser["NAME"] . " " . $aBestelltArray[$bestellt];
             $newsSQL = "insert into news (GAMEID,MESSAGE,USERID) value('" . mysql_real_escape_string($IDGame) . "','" . mysql_real_escape_string($message) . "','".mysql_real_escape_string($LoggedInuser["ID"])."')";
             $db->execute($newsSQL);
-            $helper->sendMail2People($db,$loggedInUser[0]["ID"],$message,"Spiel ". $aBestelltArray[$bestellt]);
+            $helper->sendMail2People($db,$_COOKIE["loggedInBG"],$message,"Spiel ". $aBestelltArray[$bestellt]);
 
         }
     }
@@ -274,7 +274,7 @@ echo "<div class='clear'></div>";
             }
             echo "</select></fieldset>";
         }
-        if (isset($game)) {
+        if (isset($game) && !$ext) {
             echo "</br><fieldset><label>Files Löschen:</label><select  multiple='multiple' name='deletes[]'>";
             $fileDirPath = "./uploads/" . $game["ID"] . "/";
             if (file_exists($fileDirPath)) {

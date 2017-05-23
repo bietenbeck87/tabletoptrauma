@@ -90,7 +90,6 @@ class helper
         $fp = fopen($PicPath, 'w+');
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_REFERER, 'https://boardgamegeek.com/');
-        $findsomething = curl_exec($ch);
         curl_close($ch);
         fclose($fp);
 

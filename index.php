@@ -394,6 +394,9 @@ if (isset($_COOKIE["selectedGroup"])) {
 elseif ($bStatus && isset($_COOKIE["loggedInBG"])) {
     $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='" . $_COOKIE["loggedInBG"] . "' and ERWEITERUNG is Null";
 }
+elseif (isset($_GET["userID"]) && !isset($_COOKIE["loggedInBG"])) {
+    $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME join user2game as u2g on b.ID=u2g.IDGAME where u2g.IDUSER='" . $_GET["userID"] . "' and ERWEITERUNG is Null";
+}
 else {
     $getGames = "Select distinct b.* from brettspiele as b left join game2tag as g2g on b.ID =g2g.IDGAME where 1=1 and ERWEITERUNG is Null";
 }

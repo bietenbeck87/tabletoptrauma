@@ -144,6 +144,8 @@ echo "<div class='clear'></div>";
         } ?>
         <label>News-Mails?:</label><input type="checkbox" value="1" name="news" <?php if($user[0]["GETNEWS"] == 1){echo "checked='checked'";}?>><br>
         <?php if (isset($user)) {
+            echo "<label>Link zu deinen Spielen:</label>";
+            echo "<input type='text' value='http://".$_SERVER["HTTP_HOST"]."?userID=".$user[0]["ID"]."'>";
             echo "<button type = 'submit' name = 'buttonChecked' > Speichern </button >";
         }else{
             echo "<button type = 'submit' name = 'buttonChecked' >Benutzer erstellen</button >";
